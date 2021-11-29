@@ -1,0 +1,70 @@
+
+local enable_debug = false
+
+function on_game_start()
+    init_storage()
+	RegisterScriptCallback("actor_item_to_belt", set_on_slot)
+end
+
+function print_dbg(txt, ...)
+    if enable_debug then 
+        printf(txt, ...)
+    end
+end
+
+local config = {}
+
+function init_storage()
+    local ini_attachments = ini_file("items\\settings\\slot_control.ltx")
+    local n = ini_attachments:line_count("arti_slot_control")
+    for i=0,n-1 do
+        result, id, value = ini_attachments:r_line_ex("arti_slot_control",i,"","")
+        print_dbg("%s: Caching %s, %s", "slot control", id, value)
+        config[id] = value
+    end
+
+end
+
+function on_belt(id)
+    local found = false
+    db.actor:iterate_belt(
+            function (owner, obj)
+                -- printf("checking object id %s, section %s", obj:id(), obj:section())
+                if obj:id() == id then
+                    -- printf("found it")
+                    found =  true
+				end
+			end
+        )
+    return found
+end
+
+function set_on_slot(slot_item)
+    local category = config[slot_item:section()]
+    print_dbg("attempting to slot "..slot_item:section())
+    if category then
+        local val = 0
+        print_dbg("searching for category "..category)
+
+		db.actor:iterate_belt(
+			function (owner, obj)
+                local id = obj:id()
+                local section = obj:section()
+				if id ~= slot_item:id() and config[section] and bit_and(val, config[section]) == 0 then
+                    val = val + config[obj:section()]
+                    print_dbg("found category "..config[section])
+				end
+			end
+		)
+        if bit_and(val, category) ~= 0 then
+            msg = "slot_duplicate_item_"..category
+            news_manager.send_tip(db.actor, game.translate_string(msg), nil, "swiss_knife", 6000)
+            remove_item_from_slot(slot_item)
+		end
+	end
+end
+
+
+function remove_item_from_slot(slot_item)
+    db.actor:move_to_ruck(slot_item)
+end

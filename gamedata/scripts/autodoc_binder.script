@@ -1,0 +1,237 @@
+-- todo: implement
+-- remap to store stimpacks, convert to no-anim subvariants
+
+local mapping = {
+    ["stimpack"] = "stimpack_n",
+    ["stimpack_army"] = "stimpack_army_n"
+}
+
+local capacity = {
+
+    ["stimpack_n"] = 5,
+    ["stimpack_army_n"] = 2
+}
+
+local priorities = {
+    {
+        "stimpack_n",
+        "stimpack_army_n",
+    },
+    {
+        "stimpack_army_n",
+        "stimpack_n"
+    }
+}
+
+local autodoc_last_sip = nil
+gc = game.translate_string
+
+local autodoc_cap = {}
+
+get_config = arti_slot_control_mcm.get_config
+print_dbg = arti_slot_control_mcm.print_dbg
+
+function on_belt(autodoc)
+    local found = false
+    db.actor:iterate_belt(
+            function (owner, obj)
+                -- printf("checking object id %s, section %s", obj:id(), obj:section())
+                if obj:id() == autodoc then
+                    -- printf("found it")
+                    found = true
+				end
+			end
+        )
+    return found
+end
+
+local MIN = 0.0001
+local MAX = 0.999
+
+function evaluate_actor(id)
+    -- determine actor state
+    local level = 0
+    if db.actor.health < 0.35 then
+        level = 2
+    elseif db.actor.health < 0.65 then
+        level = 1
+    end
+    if level > 0 then
+        local stimpack = choose_stimpack(id, level)
+        print_dbg("applying stimpack %s", stimpack)
+        if stimpack then
+            -- eat the stimpack if exists
+            autodoc_cap[id][stimpack] = autodoc_cap[id][stimpack] - 1
+            local se_stim = alife_create_item(stimpack, db.actor)
+            CreateTimeEvent("autodoc", "eat_stimpack"..se_stim.id, 0, timer_eat, se_stim.id)
+            -- message player
+            news_manager.send_tip(db.actor, game.translate_string("st_autodoc_medicate_"..level), nil, "swiss_knife", 6000)
+            autodoc_last_sip = autodoc_last_sip + 15000
+            print_dbg("eating stimpack, cooldown set to %s", autodoc_last_sip)
+        end
+    end
+end
+
+-- given a severity level (1-3) consume the appropriate stimpack
+function choose_stimpack(id, level)
+    local cap = autodoc_cap[id]
+    local list = priorities[level]
+    for i=1,#list do
+        if cap[list[i]] > 0 then
+            return list[i]
+        end
+    end
+end
+
+function timer_eat(id)
+	db.actor:eat(level.object_by_id(id))
+    print_dbg("eated")
+	return true
+end
+
+function is_autodoc(obj)
+    return obj and  SYS_GetParam(0, obj:section(), "script_binding") == "autodoc_binder.bind"
+end
+
+function on_item_drag_dropped(stimpack, autodoc, slot_from, slot_to)
+    
+    local id = autodoc:id()
+    
+    local stim_sec = stimpack:section()
+    local mapped_stim = mapping[stim_sec]
+    if not mapped_stim or not is_autodoc(autodoc) then
+        return
+    end
+
+    if not mapped_stim then
+        -- incompatible
+    elseif autodoc_cap[id][mapped_stim] < capacity[mapped_stim] then
+        autodoc_cap[id][mapped_stim] = autodoc_cap[id][mapped_stim] + 1
+        alife_release(stimpack)
+        alife_create_item("e_syringe", db.actor)
+        news_manager.send_tip(db.actor, gc("st_autodoc_fill_"..mapped_stim..autodoc_cap[id][mapped_stim]), nil, "swiss_knife", 6000)
+    else
+        news_manager.send_tip(db.actor, gc("st_autodoc_full"), nil, "swiss_knife", 6000)
+    end
+
+end
+
+
+local clr_2  = utils_xml.get_color("ui_gray_1")
+-- monkey patch descriptor
+BuildHeader = ui_item.build_desc_header  -- obj needed
+function ui_item.build_desc_header(obj, sec, str)
+	str = str or gc(ini_sys:r_string_ex(sec,"description"))
+	if (not str) then return "" end
+	
+	local _str = ""
+    if is_autodoc(obj) then
+        local con = autodoc_cap[obj:id()] or {}
+        for k,v in pairs(con) do
+            local clr = utils_xml.get_color_con(con[k]/capacity[k])
+            _str = _str .. clr_2 .. " " .. gc("st_dot") .." " .. gc("st_autodoc_capacity_"..k) .. " " .. clr .. con[k] .. "/" .. capacity[k] .. "\\n" .. clr_2
+        end
+        _str = _str .. " \\n" 
+        return _str .. str
+    else
+        return BuildHeader(obj, sec, str)
+    end
+end
+
+function reset_cooldown(type)
+    cooldown[type] = nil
+    return true
+end
+
+-- class
+function bind(obj)
+    -- printf("bound object "..obj:section())
+    obj:bind_object(autodoc_binder(obj))
+end
+local step = 1000
+
+class "autodoc_binder" (object_binder)
+
+function autodoc_binder:__init(obj) super(obj)
+	self.first_update = nil
+end
+
+function autodoc_binder:update(delta)
+    object_binder.update(self, delta)
+	local obj = self.object
+	local id = obj:id()
+    local curr_time = time_global()
+
+    if not self.first_update then
+        self.first_update = true
+        if not autodoc_cap[id] then
+            -- first time initialization
+            autodoc_cap[id] = {}
+            autodoc_cap[id].stimpack_n = 0
+            autodoc_cap[id].stimpack_army_n = 0
+        end
+    end
+    
+    if (get_console_cmd(1,"g_god")) or not on_belt(id) then
+		return
+    end
+
+    -- print_dbg("curr time: %s. sip time: %s", curr_time, autodoc_last_sip)
+
+    if (autodoc_last_sip and (curr_time - autodoc_last_sip) < step) then
+		return 
+    end
+    autodoc_last_sip = curr_time
+    evaluate_actor(id)
+    return
+end
+function autodoc_binder:reload(section)
+    object_binder.reload(self, section)
+end
+
+function autodoc_binder:reinit()
+    object_binder.reinit(self)
+end
+
+function autodoc_binder:net_spawn(se_abstract)
+    if not(object_binder.net_spawn(self, se_abstract)) then
+        return false
+    end
+    return true
+end
+
+function autodoc_binder:net_destroy()
+	--print_dbg("[%s] destroyed: %s", self.object:name())
+	object_binder.net_destroy(self)
+end
+
+function autodoc_binder:save(stpk)
+end
+
+function autodoc_binder:load(stpk)
+end
+
+local function save_state(mdata) 
+	mdata.autodoc_cap = autodoc_cap
+end
+
+local function load_state(mdata) 
+	autodoc_cap = mdata.autodoc_cap or {}
+end
+
+local function se_device_on_unregister(se_obj, typ)
+	--local sec = se_obj:section_name()
+	--if ini_sys:r_string_ex(sec,"script_binding") == "item_device.bind" then
+		local id = se_obj.id
+		autodoc_cap[id] = nil
+	--end
+end
+
+function on_game_start()
+	if (USE_MARSHAL) then 
+		RegisterScriptCallback("save_state",save_state)
+		RegisterScriptCallback("load_state",load_state)
+	end
+    RegisterScriptCallback("ActorMenu_on_item_drag_drop",on_item_drag_dropped)
+	RegisterScriptCallback("server_entity_on_unregister",se_device_on_unregister)
+end

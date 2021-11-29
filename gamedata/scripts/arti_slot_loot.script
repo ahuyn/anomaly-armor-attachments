@@ -1,0 +1,185 @@
+
+get_config = arti_slot_control_mcm.get_config
+print_dbg = arti_slot_control_mcm.print_dbg
+
+
+function add_recipes()
+    workshop_autoinject.add_override_recipe( "x_af_frames_up", "3, recipe_expert_0, af_frames,1,af_night_star,1", 3)
+    workshop_autoinject.add_override_recipe( "x_af_grid_up", "3, recipe_expert_0, af_grid,1,af_gravi,1", 3)
+    workshop_autoinject.add_override_recipe( "x_af_cooler_up", "3, recipe_expert_1, af_cooler,1,af_fuzz_kolobok,1", 3)
+    workshop_autoinject.add_override_recipe( "x_af_freon_up", "3, recipe_expert_1, af_freon,1,af_cristall,1", 3)
+    workshop_autoinject.add_override_recipe( "x_af_camelbak_up", "3, recipe_expert_2, af_camelbak,1,af_dummy_battery,1", 3)
+    workshop_autoinject.add_override_recipe("x_af_surge_up", "3, recipe_expert_3, af_surge, 1 ,af_electra_sparkler,1", 3)
+end
+
+TraderAuto = trader_autoinject.update
+function trader_autoinject.update(npc)
+    TraderAuto(npc)
+    add_plates(npc) -- you define this function ok
+end
+
+
+
+local poor_plates = {
+    ["supplies_2"] = {
+        ["af_kevlar"] = 1
+    },
+    ["supplies_3"] = {
+        ["af_kevlar"] = 1
+    },
+    ["supplies_4"] = {
+        ["af_kevlar"] = 2,
+        ["af_platess"] = 1
+    },
+    ["supplies_5"] = {
+        ["af_kevlar"] = 2,
+        ["af_platess"] = 1,
+        ["af_kevlar_up"] = 1
+    },
+}
+
+local ok_plates = {
+    ["supplies_1"] = {
+        ["af_kevlar"] = 1
+    },
+    ["supplies_2"] = {
+        ["af_kevlar"] = 1,
+        ["af_platess"] = 1
+    },
+    ["supplies_3"] = {
+        ["af_kevlar"] = 2,
+        ["af_platess"] = 1
+    },
+    ["supplies_4"] = {
+        ["af_kevlar"] = 2,
+        ["af_kevlar_up"] = 1,
+        ["af_platess"] = 2
+    },
+    ["supplies_5"] = {
+        ["af_kevlar"] = 3,
+        ["af_kevlar_up"] = 1,
+        ["af_platess"] = 2,
+        ["af_platess_up"] = 1,
+    },
+}
+
+local quality_plates = {
+
+    ["supplies_1"] = {
+        ["af_kevlar"] = 1,
+        ["af_polymer"] = 1,
+        ["af_ceramic"] = 1,
+        ["af_platess"] = 1
+    },
+    ["supplies_2"] = {
+        ["af_kevlar"] = 2,
+        ["af_polymer"] = 2,
+        ["af_ceramic"] = 2,
+        ["af_platess"] = 1,
+        ["af_kevlar_up"] = 1,
+    },
+    ["supplies_3"] = {
+        ["af_kevlar"] = 2,
+        ["af_polymer"] = 2,
+        ["af_ceramic"] = 2,
+        ["af_platess"] = 1,
+        ["af_polymer_up"] = 1,
+        ["af_platess_up"] = 1,
+        ["af_kevlar_up"] = 1,
+    },
+    ["supplies_4"] = {
+        ["af_kevlar"] = 2,
+        ["af_polymer"] = 2,
+        ["af_ceramic"] = 2,
+        ["af_platess"] = 1,
+        ["af_polymer_up"] = 1,
+        ["af_ceramic_up"] = 1,
+        ["af_kevlar_up"] = 1,
+        ["af_platess_up"] = 1
+    },
+    ["supplies_5"] = {
+        ["af_kevlar"] = 2,
+        ["af_polymer"] = 2,
+        ["af_ceramic"] = 2,
+        ["af_platess"] = 2,
+        ["af_polymer_up"] = 1,
+        ["af_ceramic_up"] = 1,
+        ["af_kevlar_up"] = 1,
+        ["af_platess_up"] = 1
+    }
+}
+
+local trade_table = {
+    
+    ["stalker"] = poor_plates,
+    ["csky"] = poor_plates,
+    ["dolg"] = ok_plates,
+    ["svoboda"] = ok_plates,
+    ["bandit"] = poor_plates,
+    ["renegade"] = poor_plates,
+    ["greh"] = ok_plates,
+    ["killer"] = quality_plates,
+    ["army"] = quality_plates,
+    ["isg"] = quality_plates,
+    ["monolith"] = quality_plates,
+}
+
+function add_plates(npc)
+    
+	local is_trader = trader_autoinject.get_trader_type(npc) == trader_autoinject.SUPPLIER
+	if not is_trader then return end
+
+	local community = trader_autoinject.get_real_community(npc)
+	local loot_table = trade_table[community] and dup_table(trade_table[community]) or dup_table(poor_plates)
+	local supply_level = trader_autoinject.supply_level(npc)
+	if loot_table[supply_level] then
+		trader_autoinject.spawn_items(npc, loot_table[supply_level], true)
+	end
+end
+
+-- randomize plate condition on drop and add the plates that aren't in there
+
+CreateReleaseItem = death_manager.create_release_item
+function death_manager.create_release_item(npc)
+    CreateReleaseItem(npc)    
+    CreateTimeEvent("check_plates", "check"..npc:id(), 0, check_plates, npc)
+
+end 
+
+local drop_table = {
+    
+    ["stalker"] = {"af_kevlar"},
+    ["csky"] = {"af_kevlar"},
+    ["dolg"] = {"af_kevlar", "af_plates"},
+    ["svoboda"] = {"af_kevlar", "af_plates"},
+    ["bandit"] = {"af_kevlar"},
+    ["renegade"] = {"af_kevlar"},
+    ["greh"] = {"af_kevlar", "af_plates"},
+    ["killer"] = {"af_kevlar", "af_plates", "af_polymer", "af_ceramic"},
+    ["army"] = {"af_kevlar", "af_plates", "af_polymer", "af_ceramic"},
+    ["isg"] = {"af_kevlar", "af_plates", "af_polymer", "af_ceramic"},
+    ["monolith"] = {"af_kevlar", "af_plates", "af_polymer", "af_ceramic"},
+}
+
+
+function check_plates(npc)
+    local has_plate = false
+    local function itr_inv(temp, item)
+        if SYS_GetParam(0, item:section(), "material") then
+            item:set_condition(math.random())
+            has_plate = true
+        end
+    end
+    npc:iterate_inventory(itr_inv)
+    if not has_plate and math.random() < get_config("plate_chance") then
+        -- spawn ONE plate
+        local table = drop_table[npc:character_community()]
+        local to_spawn = table[math.random(#table)]
+        if math.random() < get_config("plate_up_chance") then
+            to_spawn = to_spawn .. "_up"
+        end
+        print_dbg("Spawning %s on NPC", to_spawn)
+        death_manager.spawn_with_condition(npc, to_spawn, math.random())
+    end
+    return true
+end

@@ -1,0 +1,73 @@
+
+print_dbg = arti_slot_control_mcm.print_dbg
+artifact_cond = {}
+-- class
+function bind(obj)
+    obj:bind_object(arti_cond_binder(obj))
+end
+
+class "arti_cond_binder" (object_binder)
+
+function arti_cond_binder:__init(obj) super(obj)
+	self.first_update = nil
+end
+
+function arti_cond_binder:update(delta)
+    local obj  = self.object
+    local id = obj:id()
+    if not self.first_update then
+        self.first_update = true
+        if artifact_cond[id] then
+            obj:set_condition(artifact_cond[id])
+        end
+    end
+    artifact_cond[id] = obj:condition()
+end
+
+function arti_cond_binder:reload(section)
+    object_binder.reload(self, section)
+end
+
+function arti_cond_binder:reinit()
+    object_binder.reinit(self)
+end
+
+function arti_cond_binder:net_spawn(se_abstract)
+    if not(object_binder.net_spawn(self, se_abstract)) then
+        return false
+    end
+    return true
+end
+
+function arti_cond_binder:net_destroy()
+	--print_dbg("[%s] destroyed: %s", self.object:name())
+	object_binder.net_destroy(self)
+end
+
+function arti_cond_binder:save(stpk)
+end
+
+function arti_cond_binder:load(stpk)
+end
+
+local function save_state(mdata) 
+	mdata.artifact_cond = artifact_cond
+end
+
+local function load_state(mdata) 
+	artifact_cond = mdata.artifact_cond or {}
+end
+
+local function se_device_on_unregister(se_obj, typ)
+		local id = se_obj.id
+		artifact_cond[id] = nil
+	--end
+end
+
+function on_game_start()
+	if (USE_MARSHAL) then 
+		RegisterScriptCallback("save_state",save_state)
+		RegisterScriptCallback("load_state",load_state)
+	end
+	RegisterScriptCallback("server_entity_on_unregister",se_device_on_unregister)
+end

@@ -1,0 +1,190 @@
+-- Usage: Camelbaks passively negate thirst accrual. Fill with water items and slowly drain.
+
+print_dbg = arti_slot_control_mcm.print_dbg
+
+local current_camel = 0
+
+function is_camelbak(obj)
+    local sec = obj:section()
+    return sec == "af_camelbak" or sec == "af_camelbak_up"
+end
+
+
+local water_table = {
+    ["mineral_water"] = 0.3,
+    ["flask"] = 0.2
+}
+local MIN = 0.001
+local MAX = 0.999
+-- assume camelbak holds 1.5L of water
+-- each 0.3L sip restores -2980 thirst
+-- mineral water sip restores -4260, about 1.5x
+-- assume the camelbak holds a total of 15,000 thirst restoration
+-- every thirst tick adds 30 thirst. while camelbak is available, negate the thirst scaling with the existing thirst
+-- scale sippy size based on 30 * (thirst level / 1440)
+-- big sip should do 3000
+
+GetThirst = actor_status_thirst.get_additional_thirst_timed
+
+function actor_status_thirst.get_additional_thirst_timed()
+    if current_camel ~= 0 then
+        local camel = level.object_by_id(current_camel)
+        -- process sip
+        local level = math.floor(actor_status_thirst.get_last_drink() / 1440)
+       -- this will give the negative, final amount that is applied to the tick
+        local drain_amt = drain_thirst(camel, actor_status_thirst.get_thirst_tick() * (level + 1) )
+        print_dbg("current camelbak %s, thirs level is %s, adding %s to drained thirst",current_camel, level, drain_amt)
+        return GetThirst() + drain_amt
+    else
+        return GetThirst()
+    end
+end
+
+-- attempt to drain up to the given amount
+function drain_thirst(camelbak, amount)
+    local cond_to_amt = amount / 15000
+    local cond = camelbak:condition()
+    if cond == MIN then return 0
+    elseif cond_to_amt > cond then
+        camelbak:set_condition(MIN)
+        return -1 * cond * 15000
+    else
+        camelbak:set_condition(cond - cond_to_amt)
+        return -1 * cond_to_amt * 15000
+    end
+end
+
+function on_move(obj)
+    if is_camelbak(obj) or current_camel == 0 then
+        scan_belt()
+        print_dbg("camel moved to belt")
+    end
+end
+
+function scan_belt()
+    local found = false
+    db.actor:iterate_belt(
+        function (owner, obj)
+            if is_camelbak(obj) then
+                -- printf("found it")
+                current_camel = obj:id()
+                found = true
+            end
+        end
+    )
+    if not found then current_camel = 0 end
+    print_dbg("scan belt - current camelback %s", current_camel)
+end
+
+function try_drink(camel)
+    if camel:condition() > MIN then
+        return game.translate_string("st_camelbak_trydrink")
+    end
+end
+-- sip should attempt to drain up to 0.3L
+function drink(camel)
+    if camel:condition() > MIN then
+        -- this will give the negative, final amount that is applied to the tick
+        local drain_amt = drain_thirst(camel, 3000 )
+        actor_status_thirst.modify_last_drink(drain_amt)
+        utils_obj.play_sound("interface\\inv_drink_flask_2")
+    end
+end
+
+function on_item_drag_dropped(water, camelbak, slot_from, slot_to)
+    
+    local id = camelbak:id()
+    
+    local water_sec = water:section()
+    if water_table[water_sec] == nil or not is_camelbak(camelbak) then
+        return
+    end
+
+    local cond = camelbak:condition()
+    if cond < MAX then
+        camelbak:set_condition(clamp(cond + water_table[water_sec], MIN, MAX))
+        -- patch for haruka empty canteens
+        if haruka_fill and water_sec == "flask" and water:get_remaining_uses() == 1 then
+            alife_create_item("empty_canteen", db.actor)
+        end
+        utils_item.discharge(water)
+        utils_obj.play_sound(SYS_GetParam(0, water_sec, "use_sound"))
+        news_manager.send_tip(db.actor, game.translate_string("st_camelbak_fill"), nil, "swiss_knife", 6000)
+    else
+        news_manager.send_tip(db.actor, game.translate_string("st_camelbak_full"), nil, "swiss_knife", 6000)
+    end
+
+end
+
+function bind(obj)
+    obj:bind_object(camelbak_binder(obj))
+end
+
+local camel_cond = {}
+class "camelbak_binder" (object_binder)
+
+function camelbak_binder:__init(obj) super(obj)
+	self.first_update = nil
+end
+function camelbak_binder:update(delta)
+    local obj = self.object
+    local id = obj:id()
+    if not self.first_update then
+        self.first_update = true
+        if camel_cond[id] then
+            obj:set_condition(camel_cond[id])
+        end
+    end
+    camel_cond[id] = obj:condition()
+    obj:set_weight(0.03 + (1.5 * obj:condition()))
+end
+
+function camelbak_binder:reload(section)
+    object_binder.reload(self, section)
+end
+
+function camelbak_binder:reinit()
+    object_binder.reinit(self)
+end
+
+function camelbak_binder:net_spawn(se_abstract)
+    if not(object_binder.net_spawn(self, se_abstract)) then
+        return false
+    end
+    return true
+end
+
+function camelbak_binder:net_destroy()
+	--print_dbg("[%s] destroyed: %s", self.object:name())
+	object_binder.net_destroy(self)
+end
+
+function camelbak_binder:save(stpk)
+end
+
+function camelbak_binder:load(stpk)
+end
+
+local function save_state(mdata) 
+	mdata.camel_cond = camel_cond
+end
+
+local function load_state(mdata) 
+	camel_cond = mdata.camel_cond or {}
+end
+
+local function se_device_on_unregister(se_obj, typ)
+		local id = se_obj.id
+		camel_cond[id] = nil
+	--end
+end
+
+
+function on_game_start()
+    RegisterScriptCallback("save_state",save_state)
+    RegisterScriptCallback("load_state",load_state)
+	RegisterScriptCallback("server_entity_on_unregister",se_device_on_unregister)
+    RegisterScriptCallback("actor_item_to_slot",on_move)
+	RegisterScriptCallback("actor_item_to_ruck",on_move)
+    RegisterScriptCallback("ActorMenu_on_item_drag_drop",on_item_drag_dropped)
+end

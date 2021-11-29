@@ -1,0 +1,38 @@
+-- If you don't use MCM, change your defaults from here.
+local defaults = {
+    ["camelbakMessage"] = true,
+    ["ballisticMessage"] = true,
+    ["plate_chance"] = 0.05,
+    ["plate_up_chance"] = 0.5,
+    ["ballisticMessage"] = true,
+    ["debug"] = false
+}
+
+function get_config(key)
+    if ui_mcm then
+        -- printf("MCM loaded")
+        return ui_mcm.get("slotControl/"..key)
+    else return defaults[key]
+    end
+    -- return ui_mcm and ui_mcm.get("slotControl/"..key) or defaults[key]
+end
+
+function on_mcm_load()
+    op = { id= "slotControl",sh=true ,gr={
+            { id= "title",type= "slide",link= "ui_options_slider_player",text="ui_mcm_slotControl_title",size= {512,50},spacing= 20 },
+            {id = "debug", type = "check", val = 1, def=false},
+            {id = "camelbakMessage", type = "check", val = 1, def = true},
+            {id = "ballisticMessage", type = "check", val = 1, def=true},
+            {id = "plate_chance", type = "track", val = 2, min=0,max=0.2,step=0.01, def = 0.05},
+            {id = "plate_up_chance", type = "track",val = 2, min=0,max=0.8,step=0.01, def = 0.5},
+        }
+    }
+        
+    return op
+end
+
+function print_dbg(txt, ...)
+    if get_config("debug") then 
+        printf(txt, ...)
+    end
+end

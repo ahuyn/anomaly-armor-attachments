@@ -1,0 +1,176 @@
+-- Usage: Add functionality to allow for installation of alu frames / titanium grid into backpack. Doing so should increase the carryweight of the backpack.
+
+print_dbg = arti_slot_control_mcm.print_dbg
+gc = game.translate_string
+
+local frames = {
+    ["af_frames"] = true,
+    ["af_grid"] = true,
+    ["af_frames_up"] = true,
+    ["af_grid_up"] = true,
+}
+
+local backpacks = {}
+
+function is_backpack(item)
+    return item and SYS_GetParam(0, item:section(), "kind") == "i_backpack"
+end
+
+function on_item_drag_dropped(frame, backpack, slot_from, slot_to)
+	-- Check capability
+	if not (slot_from == EDDListType.iActorBag and (slot_to == EDDListType.iActorBag or slot_to == EDDListType.iActorSlot)) then
+        return
+    end
+	
+	local sec_f = frame:section() -- frame
+    
+    -- validate frame
+    if not frames[sec_f] then  
+        print_dbg("not frame")
+        return 
+    end
+    -- validate bp
+    if not is_backpack(backpack) then 
+        print_dbg("not backpack")
+        return 
+    end
+    -- already installed?
+    if backpacks[backpack:id()] then return end
+
+    install_frame(backpack, frame)
+end
+
+function check_install_frame(frame)
+    local backpack = db.actor:item_in_slot(13)
+    if backpack and not backpacks[backpack:id()] then
+        return "st_install_frame"
+    end
+end
+
+function func_install_frame(frame)
+    local backpack = db.actor:item_in_slot(13)
+    if backpack and not backpacks[backpack:id()] then
+        install_frame(backpack, frame)
+    end    
+end
+
+function install_frame(backpack, frame)
+    print_dbg("do install frame")
+    backpacks[backpack:id()] = frame:section()
+    alife_release(frame)
+    update_weight(backpack)
+end
+
+function check_remove_frame(backpack)
+    if backpacks[backpack:id()] then
+        return "st_remove_frame"
+    end
+end
+
+function remove_frame(backpack)
+    alife_create_item(backpacks[backpack:id()], db.actor)
+    backpacks[backpack:id()] = nil
+    update_weight(backpack)
+end
+
+local current_backpack = 0
+
+function update_weight(obj)
+    local id = obj:id()
+    local base_weight = SYS_GetParam(2, obj:section(), "additional_inventory_weight")
+    if backpacks[id] then 
+        local weight = SYS_GetParam(2, backpacks[id], "additional_inventory_weight")
+        obj:set_additional_max_weight(base_weight + weight)
+    else
+        obj:set_additional_max_weight(base_weight)
+    end
+    GetActorMenu():UpdateWeight()
+end
+
+-- on equip, if it's not already, adjust the weight on the fly
+function on_move(obj)
+    local id = obj:id()
+    local c_bp_id = db.actor:item_in_slot(13) and db.actor:item_in_slot(13):id() or 0 
+    if id == c_bp_id and id ~= current_backpack then    
+        update_weight(obj)
+        current_backpack = id
+    end
+end
+
+NameCustom = ui_inventory.UIInventory.Name_Custom
+-- hijack functions for backpacks
+function ui_inventory.UIInventory:Name_Custom(obj, bag, temp, i)
+	obj = self:CheckItem(obj,"Name_Custom " .. i)
+	if i == 3 and backpacks[obj:id()] then -- menu field strip
+		return check_remove_frame(obj)
+	else
+		return NameCustom(self, obj, bag, temp, i)
+	end
+end
+
+ActionCustom = ui_inventory.UIInventory.Action_Custom
+function ui_inventory.UIInventory:Action_Custom(obj, bag, temp, i)
+	obj = self:CheckItem(obj,"Action_Custom " .. i)
+	if i == 3 and backpacks[obj:id()] then -- menu field strip
+		remove_frame(obj)
+	else
+		ActionCustom(self, obj, bag, temp, i)
+	end
+end
+
+local clr_r  = utils_xml.get_color("d_red")
+local clr_g  = utils_xml.get_color("d_green")
+local clr_y  = utils_xml.get_color("yellow")
+
+local clr_2  = utils_xml.get_color("ui_gray_1")
+original_build_desc_header = ui_item.build_desc_header
+function ui_item.build_desc_header(obj, sec, str)
+	local _str = ""
+	local _str2 = original_build_desc_header(obj, sec, str)
+	
+	if obj and is_backpack(obj) then
+        if not backpacks[obj:id()] then
+            _str =  _str .."  " .. clr_r .. gc("st_dot") .. " "  ..  gc("st_no_frame_equipped") .. "\\n"
+        else
+            _str = _str .. "  " .. clr_y .. gc("st_dot") .. " " .. clr_2 .. gc("st_equipped_frame") .. " " .. clr_g .. ui_item.get_sec_name(backpacks[obj:id()]) .. clr_2 .. "\\n"
+        end
+
+    end
+	_str = _str2 .. _str
+
+	return _str
+end
+
+DisassemblyItem = item_parts.disassembly_item
+function item_parts.disassembly_item(obj, obj_d)
+    if backpacks[obj:id()] then
+        remove_frame(obj)
+    end
+    DisassemblyItem(obj, obj_d)
+
+end
+
+local function save_state(mdata) 
+	mdata.backpacks = backpacks
+end
+
+local function load_state(mdata) 
+	backpacks = mdata.backpacks or {}
+end
+
+local function se_device_on_unregister(se_obj, typ)
+    local id = se_obj.id
+    backpacks[id] = nil
+end
+
+function on_game_start()
+	if (USE_MARSHAL) then 
+		RegisterScriptCallback("save_state",save_state)
+		RegisterScriptCallback("load_state",load_state)
+    end
+    
+	RegisterScriptCallback("actor_item_to_slot",on_move)
+	RegisterScriptCallback("actor_item_to_ruck",on_move)
+    RegisterScriptCallback("ActorMenu_on_item_drag_drop",on_item_drag_dropped)
+	RegisterScriptCallback("server_entity_on_unregister",se_device_on_unregister)
+end

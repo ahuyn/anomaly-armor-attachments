@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+
+	<string id="st_af_kevlar_name">
+		<text>Kevlar armor inserts</text>
+	</string>
+	<string id="st_af_kevlar_descr">
+		<text>Kevlar plates are widely known for their protective capabilities, and are highly valued because of their incredible strength-to-weight ratio. They perform a wide variety of functions, the most important of which is absorbing the impact of firearm projectiles on the front and the back of the torso. While incredibly lightweight and effective against small-caliber handgun rounds, they are easily defeated by any rifle round.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] provides Class II / BR3 protection\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		</text>
+	</string>
+	
+	<string id="st_af_plates_name">
+		<text>Steel armor inserts</text>
+	</string>
+	<string id="st_af_plates_descr">
+		<text>These steel plates are specially crafted, heat treated and shaped for ballistic defeating properties, fitting a wide variety of protective applications. They are designed to withstand ballistic impacts on the front and the back of the torso. This protection, however, comes at a price as the thick steel plates are incredibly heavy.\n \n%c[d_red]\n\n%c[d_red]WARNING:%c[ui_gray_2]\n \n%c[default]Steel is a conductor and its proximity to the skin makes the body more vulnerable to electricity. For this reason, it is suggested to proceed with caution when near electrical anomalies or other sources of electricity.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] provides Class III+ / BR4 protection\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		</text>
+	</string>
+	<string id="st_af_ceramic_name">
+		<text>Ceramic armor inserts</text>
+	</string>
+	<string id="st_af_ceramic_descr">
+		<text>Made of hard carbide ceramics, this type of armor insert is used by armed forces all over the world due to its ability to protect against high-caliber threats. Known as the ESAPI in the west, it dissipates the energy of incoming projectiles by cracking the ceramic into pieces, protecting the wearer. However, this mechanism also makes its multi-hit protection poor. Ceramic inserts also tend to be quite thick, restricting movement.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] provides Class IV / BR5 protection\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		</text>
+	</string>
+	<string id="st_af_polymer_name">
+		<text>UHMWPE armor inserts</text>
+	</string>
+	<string id="st_af_polymer_descr">
+		<text>Polyethylene (PE) is widely used in a variety of industrial and commercial products due to its simple nonreactive chemical structure and versatile properties. Ultra-high molecular weight polyethylene (UHMWPE), which comprises these armor inserts, provides incredible protective strength for its low weight. Incoming projectiles locally melt the polymer through friction, trapping the bullet within the insert. This mechanism gives PE plates unparallelled multi-hit protection capability. However, UHMWPE is very expensive, and cannot fully stop higher-caliber projectiles on its own.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] provides Class III / BR4 protection\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		</text>
+	</string>
+	
+	<string id="st_af_kevlar_up_name">
+		<text>Improved kevlar armor inserts</text>
+	</string>
+	<string id="st_af_kevlar_up_descr">
+		<text>Kevlar plates are widely known for their protective capabilities, and are highly valued because of their incredible strength-to-weight ratio. They perform a wide variety of functions, the most important of which is absorbing the impact of firearm projectiles on the front and the back of the torso. While incredibly lightweight and effective against small-caliber handgun rounds, they are easily defeated by any rifle round.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] provides Class II / BR3 protection\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		</text>
+	</string>
+	<string id="st_af_plates_up_name">
+		<text>Improved steel armor inserts</text>
+	</string>
+	<string id="st_af_plates_up_descr">
+		<text>A set of extremely heavy hardened-steel armor inserts. While they will protect against some high-caliber rounds, have good multi-hit capability, and are reasonably cheap, these benefits come at the cost of high weight. For this reason, soldiers of armies have opted for lighter ceramic inserts, while steel inserts such as these are mainly purchased by civilians. In the Zone, steel plates are often worn by STALKERs in exoskeletons, allowing them to easily carry the extra weight.\n \n%c[d_red]\n\n%c[d_red]WARNING:%c[ui_gray_2]\n \n%c[default]Steel is a conductor and its proximity to the skin makes the body more vulnerable to electricity. For this reason, it is suggested to proceed with caution when near electrical anomalies or other sources of electricity.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] provides Class IV / BR5 protection\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		</text>
+	</string>
+	<string id="st_af_ceramic_up_name">
+		<text>Improved ceramic armor inserts</text>
+	</string>
+	<string id="st_af_ceramic_up_descr">
+		<text>A set of next-generation ceramic plates. Such plates have been developed by both the US and Russian armed forces to confront heavily-armed threats. Despite its ability to absorb impacts of high-caliber armor-piercing rounds, it was never widely adopted due to the extra weight and lack of threats utilizing such firepower.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] provides Class IV / BR6 protection\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		</text>
+	</string>
+	<string id="st_af_polymer_up_name">
+		<text>UHMWPE/Ceramic armor inserts</text>
+	</string>
+	<string id="st_af_polymer_up_descr">
+		<text>One of the most recent advances in personal armor comes in the form of a composite armor insert composed of a hard ceramic impact layer backed with an ultra-high molecular weight polyethylene (UHMWPE) reinforcing layer to prevent penetration. While neither as protective against high-calibers as thicker full-ceramic plates, nor as capable for multi-hit protection as UHMWPE-only plates, it manages to protect against a majority of threats while still being lighter than most inserts. However, it's high expense has delayed mass adoption by the world's armed forces.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] provides Class IV / BR5 protection\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		</text>
+	</string>
+	
+</string_table>

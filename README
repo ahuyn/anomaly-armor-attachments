@@ -1,0 +1,86 @@
+Rework of armor attachments.
+
+Changelog:
+V1.3 - Big changes across the board
+- Aluminium frames, titanium grid install directly into the backpack.
+- Surge protector provides way more protection from electric shock. However, it loses condition as a result and needs to be repaired with electronic stuff (capacitors, transistors, resistors, wire)
+- Body cooler has been reworked into an autodoc module. Refill with stimpacks (standard and army) and they will automatically be applied when you reach low health.
+- Camelbak logic reworked. No more ghost items.
+- Armor plates damage has been slightly reworked. Kevlar nerfed and plates take less scratch damage from small hits. Plate distribution reworked and enemies will have a chance to drop damaged plates.
+V1.2.1 - RUS translation from TDLemon
+V1.2 - Major rework of camelbak. No longer requires any thirst patch compatibility and is completely independent. How it works now is, whenever you drink from the camelbak, it applies a short-lived booster that restores a lot of power to you. You can drink directly from the camelbak for a greater effect (right click). Because of this, there is no more conflict with any thirst-modifying addon. Sounds have been added to ballistic insert damage, thanks to the inimitable Patrick Sutton.
+V1.1.5 - Simplified handling of removing armor attachments, maybe this might fix the unequip bug.
+V1.1.4 - Fixed bug where attachments could be restored to full condition. Slightly nerfed Improved FEM.
+V1.1.3 - Fixed armor insert icons on DX8/9
+V1.1.2 - Fixed nonworking MCM options
+V1.1.1 - Localized some strings. Added ability to toggle messages for camelbak drinking and ballistic insert damage (default true) through MCM. Made this readme less obscure.
+V1.1 - Added working ballistic plates from Vintar.
+
+What this addon does:
+Armor attachments are rebalanced and in general much stronger. However, you are limited to one per category.
+More or less stolen from Dead Air, but refactored by me for efficiency.
+Camelbaks and ballistic inserts actually work now.
+
+Armor attachment rework:
+You are limited to one outfit attachment of a given type. The types are:
+
+Camelbak
+- self explanatory
+Ballistic insert
+- (improved) Kevlar insert
+- (improved) Carbon steel plate
+- (improved) Ceramic inserts
+- (improved) UHMWPE inserts
+Back frame (also incompatible with exos)
+- (improved) titanium grid
+- (improved) aluminum frame
+Environmental Control Module
+- (improved) Surge suppressor/regenerator
+- (improved) Body cooler
+- (improved) Freon Emission Module
+
+To balance this, the attachments are made to be much more effective overall, so it is worthwhile to have one.
+
+Specific hanges to attachments:
+- Improved attachments require artifacts to craft.
+- Ballistic inserts work. More below.
+- Camelbacks work. More below.
+- Frame/grid carry capacity increased.
+- Surge regenerator electricity res increased.
+- Freon module less effective than body cooler but cheaper. Improved FEM adds stamina regen and weight carried.
+- Improved body cooler reduces rads, removed stamina regen and weight carried.
+
+Camelbak functionality:
+Camelbaks now restore hydration to the user.
+
+- Hydration ticks run on a separate clock from thirst ticks. Every ten in-game minutes, or on equip, actor will drink from the Camelbak.
+- Camelbak provides no stamina boost by itself. However, when water is drank, it will provide a short-lived booster to stamina.
+- Improved Camelbak confers a native stamina boost (because it's nice and cold).
+- Camelbaks will slowly drain capacity as they are drank from. If they are empty, no bonuses (or penalties) will be applied.
+- Camelbaks can be refilled through drag-dropping Flask of Water or Mineral Water.
+
+Ballistic inserts functionality:
+- Ballistic armor inserts operate similar to real life now: they absorb impacts of incoming shots to the torso, reducing damage by +80%, but at the cost of their condition. Condition loss per hit depends on the type of insert and its rating. At 0%, the insert is destroyed.
+- Armor inserts protect against a certain level of armor penetration based on their type and their condition. For example, a mid-size rifle round will easily defeat Kevlar, but will be fully blocked by a ceramic insert.
+- Added 2 new armor insert types: Ceramic and Polyethylene. Each insert type has its own attributes. 
+- Steel is strong, cheap, durable, but heavy. 
+- Kevlar is cheap, durable, light, but weak. 
+- Ceramic is protective and fairly light, but won't last many hits. 
+- PE is well-rounded, but very expensive.
+- Armor inserts are available from all technicians. Providing tools to a technician will unlock the better armor inserts.
+
+Surge Suppressor functionality:
+- Normal surge suppressor completely protects against electrical damage, draining condition to do so (about 20% condition per shock). 
+- Can be repaired by drag-dropping resistors and copper wire
+- Upgraded surge suppressor provides less protection but doesn't degrade, like normal
+
+Body cooler functionality:
+- Renamed to Autodoc unit
+- Refillable with stimpacks, metamizole and morphine
+- When health is low, automatically administers health. The lower, the more potent (and the more side effects)
+- When bleeding, automatically administers painkillers that reduce bleeding and give damage resistance
+- Cooldown of 15 seconds between each dose
+
+Later I will make mutant pelts stronger as well and subject them to the same treatment.
+
+Credits to Vintar for providing functioning ballistic inserts.

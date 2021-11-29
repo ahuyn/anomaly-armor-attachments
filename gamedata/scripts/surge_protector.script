@@ -1,0 +1,107 @@
+-- Usage: Adds functionality to make surge protectors absorb shock and be repaired via electronics.
+
+
+print_dbg = arti_slot_control_mcm.print_dbg
+
+local surges = {
+    ["af_surge"] = 0.4,
+    ["af_surge_up"] = 0.25,
+}
+
+local MIN = 0.0001
+local MAX = 0.999
+
+function actor_on_before_hit(shit,bone_id)
+    if shit.type ~= hit.shock then return end
+    local surge = nil
+    db.actor:iterate_belt(function(owner, obj)
+        if surges[obj:section()] then
+            surge = obj
+        end
+    end)
+    if surge then
+        local to_drain = shit.power * surges[surge:section()]
+        print_dbg("tanked a shock of strength %s, reducing by %s", shit.power, to_drain)
+        local cond = surge:condition()
+        if cond <= to_drain then
+            surge:set_condition(clamp(cond - to_drain, MIN, MAX))
+            shit.power = shit.power * ((to_drain - cond) / to_drain)
+        else
+            surge:set_condition(cond - to_drain)
+            shit.power = shit.power * 0.4
+        end
+    end
+end
+
+local repair_table = {
+    ["prt_i_transistors"] = 0.15,
+    ["prt_i_capacitors"] = 0.12,
+    ["prt_i_resistors"] = 0.09,
+    ["prt_i_copper"] = 0.06
+}
+
+function on_item_drag_dropped(repair_item, surge, slot_from, slot_to)
+    
+	local repair_sec = repair_item:section()
+    local surge_sec = surge:section()
+    
+    
+    if repair_table[repair_sec] == nil or not surges[surge_sec] then
+        return
+    end
+
+    local surge_cond = surge:condition()
+
+    if surge_cond < MAX then
+        surge:set_condition(clamp(surge_cond + repair_table[repair_sec], MIN, MAX))
+        utils_obj.play_sound("interface\\inv_batt")
+        alife_release(repair_item)
+    end
+end
+
+NameCustom = ui_inventory.UIInventory.Name_Custom
+-- hijack functions for backpacks
+function ui_inventory.UIInventory:Name_Custom(obj, bag, temp, i)
+	obj = self:CheckItem(obj,"Name_Custom " .. i)
+	if i == 3 and surges[obj:section()] and obj:condition() < MAX then -- menu field strip
+		return "ui_inv_repair"
+	else
+		return NameCustom(self, obj, bag, temp, i)
+	end
+end
+
+ActionCustom = ui_inventory.UIInventory.Action_Custom
+function ui_inventory.UIInventory:Action_Custom(obj, bag, temp, i)
+	obj = self:CheckItem(obj,"Action_Custom " .. i)
+	if i == 3 and surges[obj:section()] and obj:condition() < MAX then -- menu field strip
+		repair_surge(obj)
+	else
+		ActionCustom(self, obj, bag, temp, i)
+	end
+end
+
+-- iterate through inventory and collect parts to repair. then apply the repair
+function repair_surge(surge)
+    local to_use = {}
+    local to_restore = MAX - surge:condition()
+    db.actor:iterate_inventory(function(temp, item)
+        local sec = item:section()
+        if repair_table[sec] and to_restore > 0 then
+            to_restore = clamp(to_restore - repair_table[sec], 0, 1)
+            table.insert(to_use, item:id())
+        end
+    end)
+    if #to_use > 1 then
+        utils_obj.play_sound("interface\\inv_batt")
+        for k,v in pairs(to_use) do
+            alife_release_id(v)
+        end
+        surge:set_condition(MAX - to_restore)
+    end
+
+end
+
+function on_game_start()
+    RegisterScriptCallback("ActorMenu_on_item_drag_drop",on_item_drag_dropped)
+    RegisterScriptCallback("actor_on_before_hit",actor_on_before_hit)
+end
