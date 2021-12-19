@@ -29,11 +29,11 @@ local poor_plates = {
     },
     ["supplies_4"] = {
         ["af_kevlar"] = 2,
-        ["af_platess"] = 1
+        ["af_plates"] = 1
     },
     ["supplies_5"] = {
         ["af_kevlar"] = 2,
-        ["af_platess"] = 1,
+        ["af_plates"] = 1,
         ["af_kevlar_up"] = 1
     },
 }
@@ -44,22 +44,22 @@ local ok_plates = {
     },
     ["supplies_2"] = {
         ["af_kevlar"] = 1,
-        ["af_platess"] = 1
+        ["af_plates"] = 1
     },
     ["supplies_3"] = {
         ["af_kevlar"] = 2,
-        ["af_platess"] = 1
+        ["af_plates"] = 1
     },
     ["supplies_4"] = {
         ["af_kevlar"] = 2,
         ["af_kevlar_up"] = 1,
-        ["af_platess"] = 2
+        ["af_plates"] = 2
     },
     ["supplies_5"] = {
         ["af_kevlar"] = 3,
         ["af_kevlar_up"] = 1,
-        ["af_platess"] = 2,
-        ["af_platess_up"] = 1,
+        ["af_plates"] = 2,
+        ["af_plates_up"] = 1,
     },
 }
 
@@ -69,43 +69,43 @@ local quality_plates = {
         ["af_kevlar"] = 1,
         ["af_polymer"] = 1,
         ["af_ceramic"] = 1,
-        ["af_platess"] = 1
+        ["af_plates"] = 1
     },
     ["supplies_2"] = {
         ["af_kevlar"] = 2,
         ["af_polymer"] = 2,
         ["af_ceramic"] = 2,
-        ["af_platess"] = 1,
+        ["af_plates"] = 1,
         ["af_kevlar_up"] = 1,
     },
     ["supplies_3"] = {
         ["af_kevlar"] = 2,
         ["af_polymer"] = 2,
         ["af_ceramic"] = 2,
-        ["af_platess"] = 1,
+        ["af_plates"] = 1,
         ["af_polymer_up"] = 1,
-        ["af_platess_up"] = 1,
+        ["af_plates_up"] = 1,
         ["af_kevlar_up"] = 1,
     },
     ["supplies_4"] = {
         ["af_kevlar"] = 2,
         ["af_polymer"] = 2,
         ["af_ceramic"] = 2,
-        ["af_platess"] = 1,
+        ["af_plates"] = 1,
         ["af_polymer_up"] = 1,
         ["af_ceramic_up"] = 1,
         ["af_kevlar_up"] = 1,
-        ["af_platess_up"] = 1
+        ["af_plates_up"] = 1
     },
     ["supplies_5"] = {
         ["af_kevlar"] = 2,
         ["af_polymer"] = 2,
         ["af_ceramic"] = 2,
-        ["af_platess"] = 2,
+        ["af_plates"] = 2,
         ["af_polymer_up"] = 1,
         ["af_ceramic_up"] = 1,
         ["af_kevlar_up"] = 1,
-        ["af_platess_up"] = 1
+        ["af_plates_up"] = 1
     }
 }
 
