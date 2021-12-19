@@ -75,9 +75,19 @@ end
 
 local current_backpack = 0
 
+-- Credit to HarukaSai for inv iteration adjustment
 function update_weight(obj)
     local id = obj:id()
     local base_weight = SYS_GetParam(2, obj:section(), "additional_inventory_weight")
+    local upgrades = utils_item.get_upgrades_installed(obj)
+    --printf(utils_data.print_table(upgrades, "upgrades_haruka", true))
+    local add_inv_weight = 0
+    for _, upgrade in pairs(upgrades) do
+        local section = ini_sys:r_string_ex(upgrade, "section")
+        add_inv_weight = add_inv_weight + ini_sys:r_float_ex(section,"additional_inventory_weight", 0)
+        --printf(add_inv_weight)
+    end
+    base_weight = base_weight + add_inv_weight
     if backpacks[id] then 
         local weight = SYS_GetParam(2, backpacks[id], "additional_inventory_weight")
         obj:set_additional_max_weight(base_weight + weight)
