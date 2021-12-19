@@ -91,8 +91,10 @@ function update_weight(obj)
     if backpacks[id] then 
         local weight = SYS_GetParam(2, backpacks[id], "additional_inventory_weight")
         obj:set_additional_max_weight(base_weight + weight)
+        obj:set_additional_max_walk_weight(base_weight + weight)
     else
         obj:set_additional_max_weight(base_weight)
+        obj:set_additional_max_walk_weight(weight)
     end
     GetActorMenu():UpdateWeight()
 end
