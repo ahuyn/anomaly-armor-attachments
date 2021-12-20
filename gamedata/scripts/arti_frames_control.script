@@ -100,7 +100,7 @@ function update_weight(obj)
 end
 
 -- on equip, if it's not already, adjust the weight on the fly
-function on_move(obj)
+function on_move(_, obj)
     local id = obj:id()
     local c_bp_id = db.actor:item_in_slot(13) and db.actor:item_in_slot(13):id() or 0 
     if id == c_bp_id and id ~= current_backpack then    
