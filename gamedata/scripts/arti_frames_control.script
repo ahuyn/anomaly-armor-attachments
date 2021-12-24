@@ -109,6 +109,10 @@ function on_move(_, obj)
     end
 end
 
+function slot_move(obj)
+    on_move(nil, obj)
+end
+
 NameCustom = ui_inventory.UIInventory.Name_Custom
 -- hijack functions for backpacks
 function ui_inventory.UIInventory:Name_Custom(obj, bag, temp, i)
@@ -182,6 +186,8 @@ function on_game_start()
     end
 
     RegisterScriptCallback("ActorMenu_on_item_after_move", on_move)
+	RegisterScriptCallback("actor_item_to_slot",slot_move)
+	RegisterScriptCallback("actor_item_to_ruck",slot_move)
 
     RegisterScriptCallback("ActorMenu_on_item_drag_drop",on_item_drag_dropped)
 	RegisterScriptCallback("server_entity_on_unregister",se_device_on_unregister)

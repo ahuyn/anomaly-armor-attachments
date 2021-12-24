@@ -115,7 +115,7 @@
   </string>
 
   <string id="st_no_frame_equipped">
-    <text>No backpack frme installed.</text>
+    <text>No backpack frame installed.</text>
   </string>
   <string id="st_equipped_frame">
     <text>Installed backpack frame:</text>
