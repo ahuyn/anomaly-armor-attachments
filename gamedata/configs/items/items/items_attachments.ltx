@@ -181,10 +181,10 @@ $spawn				                               = "artefacts\af_freon"
 kind			                               = i_attach
 class				                               = SCRPTART  	; ����� ������������
 visual                                             = dynamics\equipments\aa\freon
-description			                               = st_af_freon_descr
-inv_name			                               = st_af_freon_name
-inv_name_short			                           = st_af_freon_name
-inv_weight			                               = 0.72	;2.34
+description			                               = st_ass_descr
+inv_name			                               = st_ass_name
+inv_name_short			                           = st_ass_name
+inv_weight			                               = 2.72	;2.34
 inv_grid_x			                               = 3
 inv_grid_y			                               = 19
 inv_grid_width			                           = 1
@@ -203,6 +203,7 @@ attach_angle_offset		                           = 1.922,1.551,-0.740
 attach_position_offset                             = 0.15,0.002,0.25
 attach_bone_name		                           = bip01_r_hand
 auto_attach			                               = false
+ass_cooldown		                               = 60
 ;�������� ���������� (����������)
 health_restore_speed		                       = 0
 radiation_restore_speed		                       = 0
@@ -217,7 +218,7 @@ artefact_activation_seq		                       = af_activation_bold
 tier = 2
 
 [af_freon_absorbation]
-burn_immunity 			                           = 0.00814				;������������ ����������
+burn_immunity 			                           = 0				;������������ ����������
 strike_immunity 		                           = 0
 shock_immunity 			                           = 0
 wound_immunity 			                           = 0
@@ -644,10 +645,10 @@ $spawn				                               = "artefacts\af_freon_up"
 kind			                               = i_attach
 class				                               = SCRPTART  	; ����� ������������
 visual                                             = dynamics\equipments\aa\freon
-description			                               = st_af_freon_up_descr
-inv_name			                               = st_af_freon_up_name
-inv_name_short			                           = st_af_freon_up_name
-inv_weight			                               = 2.34
+description			                               = st_ass_up_descr
+inv_name			                               = st_ass_up_name
+inv_name_short			                           = st_ass_up_name
+inv_weight			                               = 4.34
 inv_grid_x			                               = 3
 inv_grid_y			                               = 19
 inv_grid_width			                           = 1
@@ -670,27 +671,26 @@ attach_angle_offset		                           = 1.922,1.551,-0.740
 attach_position_offset                             = 0.15,0.002,0.25
 attach_bone_name		                           = bip01_r_hand
 auto_attach			                               = false
+ass_cooldown		                               = 40
 ;�������� ���������� (����������)
 health_restore_speed		                       = 0
-radiation_restore_speed		                       = -0.000033
+radiation_restore_speed		                       = 0
 satiety_restore_speed		                       = 0
 power_restore_speed		                           = 0	;0.0025
 bleeding_restore_speed		                       = 0
 hit_absorbation_sect		                       = af_freon_up_absorbation
-additional_inventory_weight	                       = 4
-additional_inventory_weight2	                   = 4
 artefact_activation_seq		                       = af_activation_bold
 
 tier = 4
 
-[af_freon_up_absorbation]
-burn_immunity 			                           = 0.01				;������������ ����������
+[af_freon_up_absorbation]	
+burn_immunity 			                           = 0.0008			;������������ ����������
 strike_immunity 		                           = 0
-shock_immunity 			                           = 0
+shock_immunity 			                           = 0.008
 wound_immunity 			                           = 0
 radiation_immunity 		                           = 0
 telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
+chemical_burn_immunity                             = 0.00092
 explosion_immunity 			                       = 0
 fire_wound_immunity  		                       = 0
 
