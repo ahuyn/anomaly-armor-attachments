@@ -33,7 +33,37 @@
     <text>drink</text>
   </string>
 
-  
+  <string id="st_ass_name">
+    <text>Anomaly Suppression System</text>
+  </string>
+  <string id="st_ass_descr">
+    <text>
+      Advanced device with several scanners, transmitters, and emitters for radiowaves, electromagnetic waves, and high-pitch sonar waves. One of the first devices designed by the Ministry of Science to protect their field agents, this sophisticated machine embodies Suslov's 'tapping the fish tank' theory, where certain anomalies can be temporarily disrupted if enough environmental disturbance is introduced. The device automatically scans local anomalies and emits a combined neutralizing pulse in response to anomaly activation, effectively shutting it down temporarily and negating all hazard. Devices such as these form the bulk of active anomalous defense systems in the SSP and SEVA suits, which both feature integrated versions of this device. The device comes with a self-recharging battery for the suppression pulse, however, the onboard computer needs time to recalibrate and recalculate field changes that occur after each pulse. The device can be combined with the onboard support systems of the SSP and SEVA suits to enhance its effectiveness and recharge time. 
+      \n \n
+      %c[ui_gray_2]PROPERTIES:\n
+      %c[d_cyan] • %c[ui_gray_2] technological item\n
+      %c[d_cyan] • %c[ui_gray_2] high quality\n
+      %c[d_cyan] • %c[ui_gray_2] median recharge of 60 seconds\n
+      %c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
+    </text>
+  </string>
+
+
+  <string id="st_ass_up_name">
+    <text>Advanced Anomaly Suppression System</text>
+  </string>
+  <string id="st_ass_up_descr">
+    <text>
+      Next-generation anomaly suppression device incorporating telemetry data from rare artifact samples to compute suppression solutions more quickly. This device is the pinnacle of anomaly protection systems and is in extremely high demand with all science personnel, not to mention stalkers themselves. Additional data from the incorporated artifact sample allows pulses to be transmitted with less disturbance to the environment, allowing for recalibration cycles to occur more frequently. In addition, the device emits a constant field that passively reduces the strength of nearby anomaly fields. The device can be combined with the onboard support systems of the SSP and SEVA suits to enhance its effectiveness and recharge time. 
+      \n \n
+      %c[ui_gray_2]PROPERTIES:\n
+      %c[d_cyan] • %c[ui_gray_2] technological item\n
+      %c[d_cyan] • %c[ui_gray_2] high quality\n
+      %c[d_cyan] • %c[ui_gray_2] median recharge of 40 seconds\n
+      %c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
+    </text>
+  </string>
+
   <string id="st_lsm">
     <text>SLSA 0.06.8 EM Autodoc Module</text>
   </string>
