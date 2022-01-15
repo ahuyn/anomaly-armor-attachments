@@ -146,9 +146,9 @@ function ui_item.build_desc_header(obj, sec, str)
 	
 	if obj and is_backpack(obj) then
         if not backpacks[obj:id()] then
-            _str =  _str .."  " .. clr_r .. gc("st_dot") .. " "  ..  gc("st_no_frame_equipped") .. "\\n"
+            _str =  _str .."  " .. clr_r .. gc("st_dot") .. " "  ..  gc("st_no_frame_equipped") .. "\\n \\n"
         else
-            _str = _str .. "  " .. clr_y .. gc("st_dot") .. " " .. clr_2 .. gc("st_equipped_frame") .. " " .. clr_g .. ui_item.get_sec_name(backpacks[obj:id()]) .. clr_2 .. "\\n"
+            _str = _str .. "  " .. clr_y .. gc("st_dot") .. " " .. clr_2 .. gc("st_equipped_frame") .. " " .. clr_g .. ui_item.get_sec_name(backpacks[obj:id()]) .. clr_2 .. "\\n \\n"
         end
 
     end
