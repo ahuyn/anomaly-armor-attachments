@@ -42,6 +42,7 @@ end
 
 -- attempt to drain up to the given amount
 function drain_thirst(camelbak, amount)
+    if not camelbak then return 0 end
     local cond_to_amt = amount / 15000
     local cond = camelbak:condition()
     if cond == MIN then return 0
