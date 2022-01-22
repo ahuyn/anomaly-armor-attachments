@@ -1,0 +1,91 @@
+local zone_ids = {
+    [clsid.zone]				= true,
+    [clsid.zone_bfuzz] = true,
+    [clsid.nogravity_zone] = true,
+    [clsid.zone_dead] = true,
+    [clsid.zone_galant_s] = true,
+    [clsid.zone_galantine] = true,
+    [clsid.zone_mbald_s] = true,
+    [clsid.zone_mincer] = true,
+    [clsid.zone_mincer_s] = true,
+    [clsid.zone_mosquito_bald] = true,
+    [clsid.zone_rusty_hair] = true,
+    [clsid.zone_torrid_s] = true
+}
+
+local is_immune = false
+local on_cd = false
+
+function actor_on_before_hit(hit)
+    if hit.draftsman then
+        local id = hit.draftsman:clsid()
+        if IsAnomaly(hit.draftsman) then
+            -- check for belt
+            if on_cd then return end
+            local val = check_belt()
+            if not val then             
+                return
+            end
+            -- immunity activated - ignore hit
+            if is_immune then
+                hit.power = 0
+            -- immunity not on cd, activate and ignore
+            elseif not is_immune and not on_cd then
+                hit.power = 0
+                activate_immunity(val)
+            end
+        end
+    end
+end
+
+function activate_immunity(val)
+    is_immune = true
+    utils_obj.play_sound("weapons\\nv_start")
+    CreateTimeEvent("ass_control", "manage_immunity", 1, start_cooldown, val)
+    return true
+end
+
+function start_cooldown(val)
+    is_immune = false
+    on_cd = true
+    local outfit = db.actor:item_in_slot(7)
+    if outfit then
+        local is_sci = SYS_GetParam(0, outfit:section(), "kind") == "o_sci"
+        local is_ssp = string.find(outfit:section(), "ecolog_")
+        if is_sci then
+            if is_ssp then 
+                val = math.floor(val * 0.7) 
+            else 
+                val = math.floor(val * 0.85) 
+            end
+        end
+    end
+    CreateTimeEvent("ass_control", "reset_cd", val, reset_cooldown)
+    return true
+end
+
+function reset_cooldown()
+    on_cd = false
+    printf("Ready")
+    utils_obj.play_sound("weapons\\gauss\\gauss_wave")
+    return true
+end
+
+function check_belt()
+    local val = nil
+    db.actor:iterate_belt(
+        function (owner, obj)
+            -- printf("checking object id %s, section %s", obj:id(), obj:section())
+            if SYS_GetParam(2, obj:section(), "ass_cooldown") then
+                val = SYS_GetParam(2, obj:section(), "ass_cooldown")
+            end
+        end
+        )
+    return val
+end
+
+function on_game_start()
+    on_cd = false
+    is_immune = false
+    RegisterScriptCallback("actor_on_before_hit",actor_on_before_hit)
+end
