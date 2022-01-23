@@ -179,6 +179,13 @@ local function se_device_on_unregister(se_obj, typ)
     backpacks[id] = nil
 end
 
+function actor_on_item_use(obj)
+	if obj and (obj:section() == "itm_actor_backpack") then 
+		local backpack = db.actor:item_in_slot(13)
+        if check_remove_frame(backpack) then remove_backpack(backpack) end
+    end
+end
+
 function on_game_start()
 	if (USE_MARSHAL) then 
 		RegisterScriptCallback("save_state",save_state)
