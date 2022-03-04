@@ -184,3 +184,12 @@ function check_plates(npc)
     end
     return true
 end
+
+function on_game_start()
+    workshop_autoinject.add_override_recipe("af_frames_up", "3, recipe_expert_0, af_frames,1,af_night_star,1", 2)
+    workshop_autoinject.add_override_recipe("af_grid_up", "3, recipe_expert_0, af_grid,1,af_gravi,1", 2)
+    workshop_autoinject.add_override_recipe("af_cooler_up", "3, recipe_expert_1, af_cooler,1,af_fuzz_kolobok,1", 2)
+    workshop_autoinject.add_override_recipe("af_freon_up", "3, recipe_expert_1, af_freon,1,af_cristall,1", 2)
+    workshop_autoinject.add_override_recipe("af_camelbak_up", "3, recipe_expert_2, af_camelbak,1,af_dummy_battery,1", 2)
+    workshop_autoinject.add_override_recipe("af_surge_up", "3, recipe_expert_3, af_surge,1 ,af_electra_sparkler,1", 2)
+end
