@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+    
+	<string id="st_af_new_surge_up_name">
+		<text>Improved Surge Protector</text>
+	</string>
+	<string id="st_af_new_surge_up_descr">
+		<text>An upgraded Surge Protector making use of an artifact to better disperse electrical shock. Errant surges electricity are routed through the same path, but due to the presence of the artifact, some shock is partially absorbed and the overall damage to the components is reduced. In addition, the artifact constantly emits a mild muscle relaxing current, which helps with soreness and fatigue. \n \n%c[d_red]\n\n%c[d_red]WARNING:%c[ui_gray_2]\n \n%c[default]It should be noted that such a module will not be able to work properly and provide sufficient protection if your suit does not meet the minimum protection requirements while in an abnormal field.\n \n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] technological item\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
+		%c[d_cyan] • %c[ui_gray_2] repairable with electronic components\n
+		</text>
+	</string>
+	
+	<string id="st_af_new_frames_up_name">
+		<text>Improved aluminium frames</text>
+	</string>
+	<string id="st_af_new_frames_up_descr">
+		<text>Improvements to the aluminum frames have increased its overall comfort and weight distribution. A decent-quality aluminum frame used to more efficiently distribute the weight of your pack. Aluminum is a relatively light and strong metal, and serves well as a means to distribute weight at the cost of making the user more conductive to electricity. Adjustable straps and harnesses allow the frame to be adjusted to any torso size, and flexible plastic elements used in key parts of the construction allow for a surprising amount of flexibility when sprinting. The grid replaces the main framework of your backpack, and as such must be mounted into a backpack. Although the system is built of light aluminium, some parts can still prove useful for minor outfit repairs.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] everyday item\n
+		%c[d_cyan] • %c[ui_gray_2] can only wear one back frame\n
+		%c[d_cyan] • %c[ui_gray_2] install directly into backpacks\n
+		</text>
+	</string>
+	
+	<string id="st_af_new_grid_up_name">
+		<text>Improved titanium grid</text>
+	</string>
+	<string id="st_af_new_grid_up_descr">
+		<text>Improvements to the titanium grid have increased its overall comfort and weight distribution. A high-quality titanium grid used to more efficiently distribute the weight of your pack. Titanium's light weight and high strength makes it a superior alternative to back frames constructed of aluminum, although it shares the same conductive properties as other metal frames. Adjustable straps and harnesses allow the grid to be adjusted to any torso size, and flexible plastic elements used in key parts of the construction allow for a surprising amount of flexibility when sprinting. The grid replaces the main framework of your backpack, and as such must be mounted into a backpack. Grids are created from very high quality titanium, thus disassembled grid can be used as an effective combat outfit or helmet repair supplement.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] everyday item\n
+		%c[d_cyan] • %c[ui_gray_2] high quality\n
+		%c[d_cyan] • %c[ui_gray_2] can only wear one back frame\n
+		%c[d_cyan] • %c[ui_gray_2] install directly into backpacks\n
+		</text>
+	</string>
+	
+	<string id="st_af_new_freon_up_name">
+		<text>Improved freon emission module</text>
+	</string>
+	<string id="st_af_new_freon_up_descr">
+		<text>Improvements to the freon emission module have increased the output of cooled air, both improving its protective capabilities as well as slowly filtering out radiation in the area local to the user. The freon emission module maintains a constant temperature around the body at the level of 20 degrees Celsius by emitting a thick layer of freon cooled air particles around the user that absorb excess heat and reduce the ambient temperature in the user's immediate vicinity. Often used by Ecologists to reduce the impact of thermal anomalies as well as to keep cool in their SSP suits.\n \n 
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] technological item\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n</text>
+	</string>
+	
+	<string id="st_af_new_cooler_up_name">
+		<text>Improved body cooler</text>
+	</string>
+	<string id="st_af_new_cooler_up_descr">
+		<text>Advanced thermoelectric cooler developed with Zone technology. Improvements in the design and materials used have increased the efficiency of heat redirection, and additionally draws out small amounts of ionizing radiation from the user's body. Electrical currents transfer thermal energy away from the user's body to the surrounding area. Historically, thermoelectric coolers have seen limited effectiveness in the field due to a short lifetime of the conducting material, but research into thermal artifacts has produced several experimental alloys with a long effective lifetime as thermocoolers suitable to be used in the field. When a large amount of thermal energy makes contact with the user, the Body cooler activates and disperses the heat into the surrounding area. While more effective than the Freon Emission Module, the lack of active cooling makes it relatively less popular among Ecologists. In case of disassembly of the unit using a toolkit, the metal casing can be reused as outfit repair material.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] technological item\n
+		%c[d_cyan] • %c[ui_gray_2] high quality\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
+		</text>
+	</string>
+	
+	<string id="st_af_new_camelbak_up_name">
+		<text>Improved camelbak</text>
+	</string>
+	<string id="st_af_new_camelbak_up_descr">
+		<text>Improvements to the Camelbak keeps the stored water refreshingly cold, cooling the user passively and on drink. Borrowing its name from the myth that camels store water in their humps, camelbak is a pack worn on the back or around the waist of the user, containing a bladder that is filled with water to keep one hydrated. Flexible tube with a mouthpiece facilitates use even in most pressing situations. This model is camouflaged and integrated in the suit to protect the system from damage from any source, be it combat or anomaly. Because the container is made of a high-quality textile, experienced stalkers sometimes re-use scrapped camelbaks for quality materials to patch their field outfits.\n \n%c[d_red]\n\n%c[d_red]WARNING:%c[ui_gray_2]\n \n%c[default]Although water has low electrical conductivity, its proximity to the body may make you more vulnerable to electrical currents. For this reason, it is recommended to take special notice of your surroundings when in possession of a camelbak.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] can only wear one camelbak\n
+		</text>
+	</string>
+	
+	<string id="st_af_new_surge_name">
+		<text>Surge Protector</text>
+	</string>
+	<string id="st_af_new_surge_descr">
+		<text>A small albeit advanced device consisting of a ton of resistors and replaceable fuses. It protects the user by limiting the effective amount of electricity that comes into direct contact with the body through diverting it to the fuses, and subsequently blowing them. This makes it almost foolproof against Electro Anomalies, but it can only endure so many strong electric shocks before all the fuses are blown out. Most stalkers construct these devices with spare electronic trash, which is in no shortage in the Zone. Even though the device is heavy and disposable, it is extremely useful for navigating electrical anomaly fields. As with all metal objects, it can be used as a source of repair material as long as one has appropriate tools and enough skill.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] technological item\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
+		%c[d_cyan] • %c[ui_gray_2] repairable with electronic components\n
+		</text>
+	</string>
+	
+	<string id="st_af_new_frames_name">
+		<text>Aluminium frames</text>
+	</string>
+	<string id="st_af_new_frames_descr">
+		<text>A decent-quality aluminum frame used to more efficiently distribute the weight of your pack. Aluminum is a relatively light and strong metal, and serves well as a means to distribute weight at the cost of making the user more conductive to electricity. Adjustable straps and harnesses allow the frame to be adjusted to any torso size, and flexible plastic elements used in key parts of the construction allow for a surprising amount of flexibility when sprinting. The grid replaces the main framework of your backpack, and as such must be mounted into a backpack. Although the system is built of light aluminium, some parts can still prove useful for minor outfit repairs.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] everyday item\n
+		%c[d_cyan] • %c[ui_gray_2] can only wear one back frame\n
+		%c[d_cyan] • %c[ui_gray_2] install directly into backpacks\n
+		</text>
+	</string>
+	
+	<string id="st_af_new_grid_name">
+		<text>Titanium grid</text>
+	</string>
+	<string id="st_af_new_grid_descr">
+		<text>A high-quality titanium grid used to more efficiently distribute the weight of your pack. Titanium's light weight and high strength makes it a superior alternative to back frames constructed of aluminum, although it shares the same conductive properties as other metal frames. Adjustable straps and harnesses allow the grid to be adjusted to any torso size, and flexible plastic elements used in key parts of the construction allow for a surprising amount of flexibility when sprinting. The grid replaces the main framework of your backpack, and as such must be mounted into a backpack. Grids are created from very high quality titanium, thus disassembled grid can be used as an effective combat outfit or helmet repair supplement.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] everyday item\n
+		%c[d_cyan] • %c[ui_gray_2] high quality\n
+		%c[d_cyan] • %c[ui_gray_2] can only wear one back frame\n
+		%c[d_cyan] • %c[ui_gray_2] install directly into backpacks\n
+		</text>
+	</string>
+	
+	<string id="st_af_new_freon_name">
+		<text>Freon emission module</text>
+	</string>
+	<string id="st_af_new_freon_descr">
+		<text>The freon emission module maintains a constant temperature around the body at the level of 20 degrees Celsius by emitting a thick layer of freon cooled air particles around the user that absorb excess heat and reduce the ambient temperature in the user's immediate vicinity. Often used by Ecologists to reduce the impact of thermal anomalies as well as to keep cool in their SSP suits.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] technological item\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n</text>
+	</string>
+	
+	<string id="st_af_new_cooler_name">
+		<text>Body cooler</text>
+	</string>
+	<string id="st_af_new_cooler_descr">
+		<text>Advanced thermoelectric cooler developed with Zone technology. Electrical currents transfer thermal energy away from the user's body to the surrounding area. Historically, thermoelectric coolers have seen limited effectiveness in the field due to a short lifetime of the conducting material, but research into thermal artifacts has produced several experimental alloys with a long effective lifetime as thermocoolers suitable to be used in the field. When a large amount of thermal energy makes contact with the user, the Body cooler activates and disperses the heat into the surrounding area. While more effective than the Freon Emission Module, the lack of active cooling makes it relatively less popular among Ecologists. In case of disassembly of the unit using a toolkit, the metal casing can be reused as outfit repair material.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] technological item\n
+		%c[d_cyan] • %c[ui_gray_2] high quality\n
+		%c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
+		</text>
+	</string>
+
+	<string id="st_af_new_camelbak_name">
+		<text>Camelbak</text>
+	</string>
+	<string id="st_af_new_camelbak_descr">
+		<text>Borrowing its name from the myth that camels store water in their humps, the Camelbak is a pack worn on the back or around the waist of the user, containing a bladder that is filled with water to keep one hydrated. Flexible tube with a mouthpiece facilitates use even in most pressing situations. This model is camouflaged and integrated in the suit to protect the system from damage from any source, be it combat or anomaly. Because the container is made of a high-quality textile, experienced stalkers sometimes re-use scrapped camelbaks for quality materials to patch their field outfits.\n \n%c[d_red]\n\n%c[d_red]WARNING:%c[ui_gray_2]\n \n%c[default]Although water has low electrical conductivity, its proximity to the body may make you more vulnerable to electrical currents. For this reason, it is recommended to take special notice of your surroundings when in possession of a camelbak.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
+		%c[d_cyan] • %c[ui_gray_2] can only wear one camelbak\n
+		</text>
+	</string>
+</string_table>
