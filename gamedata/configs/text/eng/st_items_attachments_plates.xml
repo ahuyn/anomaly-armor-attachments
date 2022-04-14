@@ -47,10 +47,10 @@
 		</text>
 	</string>
 	
-	<string id="st_af_kevlar_up_name">
+	<string id="st_af_new_kevlar_up_name">
 		<text>Improved kevlar armor inserts</text>
 	</string>
-	<string id="st_af_kevlar_up_descr">
+	<string id="st_af_new_kevlar_up_descr">
 		<text>Kevlar plates are widely known for their protective capabilities, and are highly valued because of their incredible strength-to-weight ratio. They perform a wide variety of functions, the most important of which is absorbing the impact of firearm projectiles on the front and the back of the torso. While incredibly lightweight and effective against small-caliber handgun rounds, they are easily defeated by any rifle round.\n \n
 		%c[ui_gray_2]PROPERTIES:\n
 		%c[d_cyan] • %c[ui_gray_2] military item\n
