@@ -1,40 +1,47 @@
 local zone_ids = {
-    [clsid.zone]				= true,
-    [clsid.zone_bfuzz] = true,
-    [clsid.nogravity_zone] = true,
-    [clsid.zone_dead] = true,
-    [clsid.zone_galant_s] = true,
-    [clsid.zone_galantine] = true,
-    [clsid.zone_mbald_s] = true,
-    [clsid.zone_mincer] = true,
-    [clsid.zone_mincer_s] = true,
-    [clsid.zone_mosquito_bald] = true,
-    [clsid.zone_rusty_hair] = true,
-    [clsid.zone_torrid_s] = true
+    [clsid.ameba_zone]			= true,
+    [clsid.zone_ameba_s]		= true,
+    [clsid.zone_dead]			= true,
+    [clsid.zone_rusty_hair]		= true,
+    [clsid.zone_bfuzz]			= true,
+    [clsid.zone_bfuzz_s]		= true,
+    [clsid.zone_mosquito_bald]	= true,
+    [clsid.zone_mbald_s]		= true,
+    [clsid.zone_galantine]		= true,
+    [clsid.zone_galant_s]		= true,
+    [clsid.zone_mincer]			= true,
+    [clsid.zone_mincer_s]		= true,
+    [clsid.torrid_zone]			= true,
+    [clsid.zone_torrid_s]		= true,
 }
 
 local is_immune = false
 local on_cd = false
 
 function actor_on_before_hit(hit)
-    if hit.draftsman then
-        local id = hit.draftsman:clsid()
-        if IsAnomaly(hit.draftsman) then
-            -- check for belt
-            if on_cd then return end
-            local val = check_belt()
-            if not val then             
-                return
-            end
-            -- immunity activated - ignore hit
-            if is_immune then
-                hit.power = 0
-            -- immunity not on cd, activate and ignore
-            elseif not is_immune and not on_cd then
-                hit.power = 0
-                activate_immunity(val)
-            end
+    if not on_cd and hit.draftsman and zone_ids[hit.draftsman:clsid()] then
+        -- check for belt
+        local val = check_belt()
+        if not val then             
+            return
         end
+        -- immunity activated - ignore hit
+        if is_immune then
+            hit.power = 0
+        -- immunity not on cd, activate and ignore
+        elseif not is_immune and not on_cd then
+            hit.power = 0
+            activate_immunity(val)
+        end
+    end
+end
+
+-- reduce availability
+KeepItem = death_manager.keep_item
+function death_manager.keep_item(npc, itm)
+    local keep_chance = character_community(npc) == "ecolog" and 0.1 or 0.03
+    if SYS_GetParam(1, itm:section(), "ass_cooldown") and math.random() > keep_chance then
+        alife_release(itm)
     end
 end
 
@@ -79,8 +86,7 @@ function check_belt()
             if SYS_GetParam(2, obj:section(), "ass_cooldown") then
                 val = SYS_GetParam(2, obj:section(), "ass_cooldown")
             end
-        end
-        )
+        end)
     return val
 end
 

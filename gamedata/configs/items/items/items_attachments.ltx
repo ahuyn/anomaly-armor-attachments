@@ -5,9 +5,9 @@
 
 
 
-;--=====================================================================
+; Environmental Protection Modules
 
-[af_surge]:af_base
+[af_surge]:af_base ; surge prot, 
 $spawn				                               = "artefacts\af_surge"
 kind			                               = i_attach
 class				                               = SCRPTART  	; ����� ������������
@@ -18,13 +18,8 @@ inv_name_short			                           = st_af_new_surge_name
 inv_weight			                               = 1.56	;4.95
 inv_grid_x			                               = 0
 inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
 cost				                               = 5460 ; 6200
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
+
 particles_bone			                           = joint2
 af_rank				                               = 0
 lights_enabled                                     = false
@@ -34,149 +29,42 @@ attach_angle_offset		                           = 1.922,1.551,-0.740
 attach_position_offset                             = 0.15,0.002,0.25
 attach_bone_name		                           = bip01_r_hand
 auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0
+
 hit_absorbation_sect		                       = af_surge_absorbation
-;additional_inventory_weight	                       = 3.385
-;additional_inventory_weight2	                   = 3.385
+
 artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.08
 script_binding                                     = arti_cond_binder.bind
 
 tier = 2
 
-[af_surge_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = 0
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 			                       = 0
-fire_wound_immunity  		                       = 0
+[af_surge_absorbation]:af_base_absorbation
+
+[af_surge_up]:af_surge
+$spawn				                               = "artefacts\af_surge_up"
+description			                               = st_af_new_surge_up_descr
+inv_name			                               = st_af_new_surge_up_name
+inv_name_short			                           = st_af_new_surge_up_name
+inv_weight			                               = 1.95
+cost				                               = 10220 ; 6200
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
+power_restore_speed		                           = 0.00044	;0.0025
+hit_absorbation_sect		                       = af_surge_up_absorbation
+
+repair_part_bonus	 	                           = 0.08
+script_binding                                     = arti_cond_binder.bind
+
+tier = 4
+
+[af_surge_up_absorbation]:af_base_absorbation
+shock_immunity 			                           = 0.25
 
 ;--=====================================================================
 
-[af_frames]:af_base
-$spawn				                               = "artefacts\af_frames"
-kind			                               = i_attach
-class				                               = SCRPTART  	; ����� ������������
-visual                                             = dynamics\equipments\aa\frames
-description			                               = st_af_new_frames_descr
-inv_name			                               = st_af_new_frames_name
-inv_name_short			                           = st_af_new_frames_name
-inv_weight			                               = 0.53
-inv_grid_x			                               = 1
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
-cost				                               = 6380 ; 6200
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-belt                                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0
-hit_absorbation_sect		                       = af_frames_absorbation
-additional_inventory_weight	                       = 6	;3.58
-additional_inventory_weight2	                   = 6	;3.58
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.07
-use2_functor                			= arti_frames_control.check_install_frame
-use2_action_functor         		    = arti_frames_control.func_install_frame
-
-tier = 2
-
-[af_frames_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = -0.056
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 		                           = 0
-fire_wound_immunity  		                       = 0
-
-;--=====================================================================
-
-[af_grid]:af_base
-$spawn				                               = "artefacts\af_grid"
-kind			                               = i_attach
-class				                               = SCRPTART  	; ����� ������������
-visual                                             = dynamics\equipments\aa\frames
-description			                               = st_af_new_grid_descr
-inv_name			                               = st_af_new_grid_name
-inv_name_short			                           = st_af_new_grid_name
-inv_weight			                               = 0.44
-inv_grid_x			                               = 2
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
-cost				                               = 8450 ; 6200
-jump_height			                               = 0.0
-belt                                               = false
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0
-hit_absorbation_sect		                       = af_grid_absorbation
-additional_inventory_weight		                   = 8	;4.42
-additional_inventory_weight2		               = 8	;4.42
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.11
-use2_functor                			= arti_frames_control.check_install_frame
-use2_action_functor         		    = arti_frames_control.func_install_frame
-
-tier = 3
-
-[af_grid_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = -0.062
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 		                           = 0
-fire_wound_immunity  		                       = 0
-
-;--=====================================================================
-
-[af_freon]:af_base
+[af_freon]:af_base ; ass
 $spawn				                               = "artefacts\af_freon"
 kind			                               = i_attach
 class				                               = SCRPTART  	; ����� ������������
@@ -187,13 +75,8 @@ inv_name_short			                           = st_ass_name
 inv_weight			                               = 2.72	;2.34
 inv_grid_x			                               = 3
 inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
 cost				                               = 4580 ; 6200
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
+
 particles_bone			                           = joint2
 af_rank				                               = 0
 lights_enabled                                     = false
@@ -204,29 +87,36 @@ attach_position_offset                             = 0.15,0.002,0.25
 attach_bone_name		                           = bip01_r_hand
 auto_attach			                               = false
 ass_cooldown		                               = 60
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0
+
 hit_absorbation_sect		                       = af_freon_absorbation
-;additional_inventory_weight	                       = 1.62
-;additional_inventory_weight2	                   = 1.62
 artefact_activation_seq		                       = af_activation_bold
 
 tier = 2
 
-[af_freon_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = 0
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 			                       = 0
-fire_wound_immunity  		                       = 0
+[af_freon_absorbation]:af_base_absorbation
+
+;--=====================================================================
+
+[af_freon_up]:af_freon
+$spawn				                               = "artefacts\af_freon_up"
+description			                               = st_ass_up_descr
+inv_name			                               = st_ass_up_name
+inv_name_short			                           = st_ass_up_name
+inv_weight			                               = 4.34
+cost				                               = 11320 ; 6200
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
+
+ass_cooldown		                               = 40
+hit_absorbation_sect		                       = af_freon_up_absorbation
+tier = 4
+
+[af_freon_up_absorbation]:af_base_absorbation	
+burn_immunity 			                           = 0.0008			;������������ ����������
+shock_immunity 			                           = 0.008
+chemical_burn_immunity                             = 0.00092
 
 ;--=====================================================================
 
@@ -241,13 +131,7 @@ inv_name_short			                           = st_lsm
 inv_weight			                               = 0.98	;3.56
 inv_grid_x			                               = 4
 inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
 cost				                               = 6080 ; 6200
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
 particles_bone			                           = joint2
 af_rank				                               = 0
 lights_enabled                                     = false
@@ -257,37 +141,170 @@ attach_angle_offset		                           = 1.922,1.551,-0.740
 attach_position_offset                             = 0.15,0.002,0.25
 attach_bone_name		                           = bip01_r_hand
 auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed			                       = 0
-bleeding_restore_speed		                       = 0
 hit_absorbation_sect		                       = af_cooler_absorbation
-;additional_inventory_weight		                   = 2.58
-;additional_inventory_weight2	                   = 2.58
+
 artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.09
 script_binding                                     = autodoc_binder.bind
 
 tier = 2
 
-[af_cooler_absorbation]
-burn_immunity 			                           = 0 ; 0.0013 = +50%				;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = 0
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 			                       = 0
-fire_wound_immunity  		                       = 0
+[af_cooler_absorbation]:af_base_absorbation
 
+;--=====================================================================
+
+[af_cooler_up]:af_cooler ; now an LSM
+$spawn				                               = "artefacts\af_cooler_up"
+description			                               = st_lsm_up_desc
+inv_name			                               = st_lsm_up
+inv_name_short			                           = st_lsm_up
+inv_weight			                               = 3.56
+cost				                               = 16560 ; 6200
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
+auto_attach			                               = false
+health_restore_speed                                = 0.0001
+hit_absorbation_sect		                       = af_cooler_up_absorbation
+
+tier = 5
+
+[af_cooler_up_absorbation]:af_base_absorbation
+
+; Backpack Frames
+;--=====================================================================
+
+[af_frames]:af_base
+$spawn				                               = "artefacts\af_frames"
+kind			                               = i_attach
+class				                               = SCRPTART  	; ����� ������������
+visual                                             = dynamics\equipments\aa\frames
+description			                               = st_af_new_frames_descr
+inv_name			                               = st_af_new_frames_name
+inv_name_short			                           = st_af_new_frames_name
+inv_weight			                               = 0.53
+inv_grid_x			                               = 1
+inv_grid_y			                               = 19
+cost				                               = 6380 ; 6200
+
+particles_bone			                           = joint2
+af_rank				                               = 0
+lights_enabled                                     = false
+trail_light_color 		                           = 0.9,0.4,0.2
+trail_light_range 		                           = 2.0
+attach_angle_offset		                           = 1.922,1.551,-0.740   
+attach_position_offset                             = 0.15,0.002,0.25
+attach_bone_name		                           = bip01_r_hand
+auto_attach			                               = false
+belt                                               = false
+
+hit_absorbation_sect		                       = af_frames_absorbation
+additional_inventory_weight	                       = 6	;3.58
+additional_inventory_weight2	                   = 6	;3.58
+artefact_activation_seq		                       = af_activation_bold
+repair_part_bonus	 	                           = 0.07
+use2_functor                			           = arti_frames_control.check_install_frame
+use2_action_functor         		               = arti_frames_control.func_install_frame
+
+tier = 2
+
+[af_frames_absorbation]:af_base_absorbation
+shock_immunity 			                           = -0.056
+
+;--=====================================================================
+
+[af_frames_up]:af_frames
+$spawn				                               = "artefacts\af_frames_up"
+description			                               = st_af_new_frames_up_descr
+inv_name			                               = st_af_new_frames_up_name
+inv_name_short			                           = st_af_new_frames_up_name
+inv_weight			                               = 1.03
+cost				                               = 12660 ; 6200
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
+hit_absorbation_sect		                       = af_frames_up_absorbation
+additional_inventory_weight	                       = 11	;7.16
+additional_inventory_weight2	                   = 11	;7.16
+
+tier = 4
+
+[af_frames_up_absorbation]:af_base_absorbation
+shock_immunity 			                           = -0.056
+telepatic_immunity 		                           = 0.00431	; 100 mT
+
+;--=====================================================================
+
+[af_grid]:af_base
+$spawn				                               = "artefacts\af_grid"
+kind			                               = i_attach
+class				                               = SCRPTART  	; ����� ������������
+visual                                             = dynamics\equipments\aa\frames
+description			                               = st_af_new_grid_descr
+inv_name			                               = st_af_new_grid_name
+inv_name_short			                           = st_af_new_grid_name
+inv_weight			                               = 0.44
+inv_grid_x			                               = 2
+inv_grid_y			                               = 19
+cost				                               = 8450 ; 6200
+belt                                               = false
+
+particles_bone			                           = joint2
+af_rank				                               = 0
+lights_enabled                                     = false
+trail_light_color 		                           = 0.9,0.4,0.2
+trail_light_range 		                           = 2.0
+attach_angle_offset		                           = 1.922,1.551,-0.740   
+attach_position_offset                             = 0.15,0.002,0.25
+attach_bone_name		                           = bip01_r_hand
+auto_attach			                               = false
+
+hit_absorbation_sect		                       = af_grid_absorbation
+additional_inventory_weight		                   = 8	;4.42
+additional_inventory_weight2		               = 8	;4.42
+artefact_activation_seq		                       = af_activation_bold
+repair_part_bonus	 	                           = 0.11
+use2_functor                			           = arti_frames_control.check_install_frame
+use2_action_functor         		               = arti_frames_control.func_install_frame
+
+tier = 3
+
+[af_grid_absorbation]:af_base_absorbation
+shock_immunity 			                           = -0.062
+
+;--=====================================================================
+
+[af_grid_up]:af_grid
+$spawn				                               = "artefacts\af_grid_up"
+description			                               = st_af_new_grid_up_descr
+inv_name			                               = st_af_new_grid_up_name
+inv_name_short			                           = st_af_new_grid_up_name
+inv_weight			                               = 1.23
+cost				                               = 16800 ; 6200
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
+hit_absorbation_sect		                       = af_grid_up_absorbation
+additional_inventory_weight		                   = 14	;17.68
+additional_inventory_weight2		               = 14	;17.68
+artefact_activation_seq		                       = af_activation_bold
+repair_part_bonus	 	                           = 0.11
+
+tier = 5
+
+[af_grid_up_absorbation]:af_base_absorbation
+shock_immunity 			                           = -0.062
+telepatic_immunity 		                           = 0.00862	; 200 mT
+
+; Plates
 ;--=====================================================================
 
 [af_kevlar]:af_base
 $spawn				                               = "artefacts\af_kevlar"
-kind			                               = i_attach
+kind			                                   = i_attach
 class				                               = SCRPTART  	; ����� ������������
 visual                                             = dynamics\equipments\aa\kevlar
 description			                               = st_af_kevlar_descr
@@ -296,13 +313,7 @@ inv_name_short			                           = st_af_kevlar_name
 inv_weight			                               = 0.91	; 0.45 * 2x plates
 inv_grid_x			                               = 5
 inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
 cost				                               = 3190 ; 6380 ; 6200
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
 particles_bone			                           = joint2
 af_rank				                               = 0
 lights_enabled                                     = false
@@ -312,15 +323,8 @@ attach_angle_offset		                           = 1.922,1.551,-0.740
 attach_position_offset                             = 0.15,0.002,0.25
 attach_bone_name		                           = bip01_r_hand
 auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0 ; 0.00065
 hit_absorbation_sect		                       = af_kevlar_absorbation
-;additional_inventory_weight	                       = 1.26
-;additional_inventory_weight2	                   = 1.26
+
 artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.06
 material = kevlar
@@ -328,16 +332,37 @@ script_binding                                     = arti_cond_binder.bind
 
 tier = 3
 
-[af_kevlar_absorbation]
-burn_immunity 			                           = 0
+[af_kevlar_absorbation]:af_base_absorbation
 strike_immunity 		                           = 0.025
-shock_immunity 			                           = 0
 wound_immunity 			                           = 0.025
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
 explosion_immunity 			                       = 0.025
 fire_wound_immunity  		                       = 0.025
+
+
+;--=====================================================================
+
+[af_kevlar_up]:af_kevlar
+$spawn				                               = "artefacts\af_kevlar"
+description			                               = st_af_new_kevlar_up_descr
+inv_name			                               = st_af_new_kevlar_up_name
+inv_name_short			                           = st_af_new_kevlar_up_name
+inv_weight			                               = 1.52
+cost				                               = 4690 ; 13380 ; 6200
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+hit_absorbation_sect		                       = af_kevlar_up_absorbation
+repair_part_bonus	 	                           = 0.12
+material                                           = kevlar
+script_binding                                     = arti_cond_binder.bind
+
+tier = 4
+
+[af_kevlar_up_absorbation]:af_base_absorbation
+strike_immunity 		                           = 0.06
+wound_immunity 			                           = 0.06
+explosion_immunity 			                       = 0.06
+fire_wound_immunity  		                       = 0.06
 
 ;--=====================================================================
 
@@ -352,13 +377,7 @@ inv_name_short			                           = st_af_plates_name
 inv_weight			                               = 7.62
 inv_grid_x			                               = 6
 inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
 cost				                               = 3930 ; 6200
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
 particles_bone			                           = joint2
 af_rank				                               = 0
 lights_enabled                                     = false
@@ -368,15 +387,8 @@ attach_angle_offset		                           = 1.922,1.551,-0.740
 attach_position_offset                             = 0.15,0.002,0.25
 attach_bone_name		                           = bip01_r_hand
 auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0 ; 0.00118
 hit_absorbation_sect		                       = af_plates_absorbation
-;additional_inventory_weight	                       = 1.58
-;additional_inventory_weight2	                   = 1.58
+
 artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.07
 material = metal
@@ -384,17 +396,39 @@ script_binding                                     = arti_cond_binder.bind
 
 tier = 3
 
-[af_plates_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
+[af_plates_absorbation]:af_base_absorbation
 strike_immunity 		                           = 0.1
 shock_immunity 			                           = -0.087
 wound_immunity 			                           = 0.1
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
 explosion_immunity 			                       = 0.1 ; 35 sheets of kevlar eq.
 fire_wound_immunity  		                       = 0.1 ; 35 sheets of kevlar eq.
 
+;--=====================================================================
+
+[af_plates_up]:af_plates
+$spawn				                               = "artefacts\af_plates_up"
+description			                               = st_af_plates_up_descr
+inv_name			                               = st_af_plates_up_name
+inv_name_short			                           = st_af_plates_up_name
+inv_weight			                               = 9.15
+cost				                               = 8430 ; 16860 ; 6200
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
+script_binding                                     = arti_cond_binder.bind
+repair_part_bonus	 	                           = 0.15
+
+tier = 5
+
+[af_plates_up_absorbation]:af_base_absorbation
+strike_immunity 		                           = 0.15
+shock_immunity 			                           = -0.087
+wound_immunity 			                           = 0.15 ; 398 sheets of kevlar eq.
+explosion_immunity 			                       = 0.15 ; 399 sheets of kevlar eq.
+fire_wound_immunity  		                       = 0.15 ; 367 sheets of kevlar eq.
+
+; Camelbak
 ;--=====================================================================
 
 [af_camelbak]:af_base
@@ -402,6 +436,18 @@ $spawn				                               = "artefacts\af_camelbak"
 kind			                               = i_attach
 class   			                               = SCRPTART  	; ����� ������������
 cform				                               = skeleton
+particles_bone			                           = joint2
+af_rank				                               = 0
+lights_enabled                                     = false
+trail_light_color 		                           = 0.9,0.4,0.2
+trail_light_range 		                           = 2.0
+attach_angle_offset		                           = 1.922,1.551,-0.740   
+attach_position_offset                             = 0.15,0.002,0.25
+attach_bone_name		                           = bip01_r_hand
+auto_attach			                               = false
+artefact_activation_seq		                       = af_activation_bold
+repair_part_bonus	 	                           = 0.07
+
 visual                                             = dynamics\equipments\aa\camelbak
 description			                               = st_af_new_camelbak_descr
 inv_name			                               = st_af_new_camelbak_name
@@ -409,529 +455,43 @@ inv_name_short			                           = st_af_new_camelbak_name
 inv_weight			                               = 1.53	;1.53
 inv_grid_x			                               = 7
 inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
 cost				                               = 6540 ; 6200
-script_binding                                     = camelbak_binder.bind;camelbak_binder.bind
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
 power_restore_speed			                       = 0.0003
-bleeding_restore_speed		                       = 0
 hit_absorbation_sect		                       = af_camelbak_absorbation
-;additional_inventory_weight	                      = 1.22
-;additional_inventory_weight2	                   = 1.22
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.07
-use1_functor                = camelbak_binder.try_drink
-use1_action_functor         = camelbak_binder.drink
+
+script_binding                                     = camelbak_binder.bind;camelbak_binder.bind
+use1_functor                                       = camelbak_binder.try_drink
+use1_action_functor                                = camelbak_binder.drink
 
 tier = 2
 
-[af_camelbak_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0
+[af_camelbak_absorbation]:af_base_absorbation
 shock_immunity 			                           = -0.092
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 			                       = 0
-fire_wound_immunity  		                       = 0
 
-
-;--;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;--;;;;;;; NEW ARMOUR ATTACHEMENTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;--;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;--=====================================================================
-
-[af_surge_up]:af_base
-$spawn				                               = "artefacts\af_surge_up"
-kind			                               = i_attach
-class				                               = SCRPTART  	; ����� ������������
-visual                                             = dynamics\equipments\aa\surge
-description			                               = st_af_new_surge_up_descr
-inv_name			                               = st_af_new_surge_up_name
-inv_name_short			                           = st_af_new_surge_up_name
-inv_weight			                               = 1.95
-inv_grid_x			                               = 0
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
-cost				                               = 10220 ; 6200
-1icon_layer_x       	                           = 0
-1icon_layer_y      		                           = 0
-1icon_layer_scale   	                           = 1
-1icon_layer        	                               = tch_upgr_ico
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0.00044	;0.0025
-bleeding_restore_speed		                       = 0
-hit_absorbation_sect		                       = af_surge_up_absorbation
-;additional_inventory_weight	                       = 6.77
-;additional_inventory_weight2	                   = 6.77
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.08
-script_binding                                     = arti_cond_binder.bind
-
-tier = 4
-
-[af_surge_up_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = 0.25
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 			                       = 0
-fire_wound_immunity  		                       = 0
-
-;--=====================================================================
-
-[af_frames_up]:af_base
-$spawn				                               = "artefacts\af_frames_up"
-kind			                               = i_attach
-class				                               = SCRPTART  	; ����� ������������
-visual                                             = dynamics\equipments\aa\frames
-description			                               = st_af_new_frames_up_descr
-inv_name			                               = st_af_new_frames_up_name
-inv_name_short			                           = st_af_new_frames_up_name
-inv_weight			                               = 1.03
-inv_grid_x			                               = 1
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
-cost				                               = 12660 ; 6200
-1icon_layer_x       	                           = 0
-1icon_layer_y      		                           = 0
-1icon_layer_scale   	                           = 1
-1icon_layer        	                               = tch_upgr_ico
-jump_height			                               = 0.0
-belt                                               = false
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0
-hit_absorbation_sect		                       = af_frames_up_absorbation
-additional_inventory_weight	                       = 11	;7.16
-additional_inventory_weight2	                   = 11	;7.16
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.07
-use2_functor                			= arti_frames_control.check_install_frame
-use2_action_functor         		    = arti_frames_control.func_install_frame
-
-tier = 4
-
-[af_frames_up_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = -0.056
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0.00431	; 100 mT
-chemical_burn_immunity 		                       = 0
-explosion_immunity 		                           = 0
-fire_wound_immunity  		                       = 0
-
-;--=====================================================================
-
-[af_grid_up]:af_base
-$spawn				                               = "artefacts\af_grid_up"
-kind			                               = i_attach
-class				                               = SCRPTART  	; ����� ������������
-visual                                             = dynamics\equipments\aa\frames
-description			                               = st_af_new_grid_up_descr
-inv_name			                               = st_af_new_grid_up_name
-inv_name_short			                           = st_af_new_grid_up_name
-inv_weight			                               = 1.23
-inv_grid_x			                               = 2
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
-cost				                               = 16800 ; 6200
-1icon_layer_x       	                           = 0
-1icon_layer_y      		                           = 0
-1icon_layer_scale   	                           = 1
-1icon_layer        	                               = tch_upgr_ico
-jump_height			                               = 0.0
-belt                                               = false
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0
-hit_absorbation_sect		                       = af_grid_up_absorbation
-additional_inventory_weight		                   = 14	;17.68
-additional_inventory_weight2		               = 14	;17.68
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.11
-use2_functor                			= arti_frames_control.check_install_frame
-use2_action_functor         		    = arti_frames_control.func_install_frame
-
-tier = 5
-
-[af_grid_up_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = -0.062
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0.00862	; 200 mT
-chemical_burn_immunity 		                       = 0
-explosion_immunity 		                           = 0
-fire_wound_immunity  		                       = 0
-
-;--=====================================================================
-
-[af_freon_up]:af_base
-$spawn				                               = "artefacts\af_freon_up"
-kind			                               = i_attach
-class				                               = SCRPTART  	; ����� ������������
-visual                                             = dynamics\equipments\aa\freon
-description			                               = st_ass_up_descr
-inv_name			                               = st_ass_up_name
-inv_name_short			                           = st_ass_up_name
-inv_weight			                               = 4.34
-inv_grid_x			                               = 3
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
-cost				                               = 11320 ; 6200
-1icon_layer_x       	                           = 0
-1icon_layer_y      		                           = 0
-1icon_layer_scale   	                           = 1
-1icon_layer        	                               = tch_upgr_ico
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-ass_cooldown		                               = 40
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0	;0.0025
-bleeding_restore_speed		                       = 0
-hit_absorbation_sect		                       = af_freon_up_absorbation
-artefact_activation_seq		                       = af_activation_bold
-
-tier = 4
-
-[af_freon_up_absorbation]	
-burn_immunity 			                           = 0.0008			;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = 0.008
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity                             = 0.00092
-explosion_immunity 			                       = 0
-fire_wound_immunity  		                       = 0
-
-;--=====================================================================
-
-[af_cooler_up]:af_base ; now an LSM
-$spawn				                               = "artefacts\af_cooler"
-kind			                               = i_attach
-class				                               = SCRPTART  	; ����� ������������
-visual                                             = dynamics\equipments\aa\cooler
-description			                               = st_lsm_up_desc
-inv_name			                               = st_lsm_up
-inv_name_short			                           = st_lsm_up
-inv_weight			                               = 3.56
-inv_grid_x			                               = 4
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
-cost				                               = 16560 ; 6200
-1icon_layer_x       	                           = 0
-1icon_layer_y      		                           = 0
-1icon_layer_scale   	                           = 1
-1icon_layer        	                               = tch_upgr_ico
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-script_binding                                     = autodoc_binder.bind
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0	;-0.00015
-health_restore_speed = 0.0001
-power_restore_speed			                       = 0 ;0.0025
-bleeding_restore_speed		                       = 0
-hit_absorbation_sect		                       = af_cooler_up_absorbation
-additional_inventory_weight		                   = 0
-additional_inventory_weight2	                   = 0
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.09
-
-tier = 5
-
-[af_cooler_up_absorbation]
-burn_immunity 			                           = 0 ; 0.0013 = +50%				;������������ ����������
-strike_immunity 		                           = 0
-shock_immunity 			                           = 0
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 			                       = 0
-fire_wound_immunity  		                       = 0
-
-;--=====================================================================
-
-[af_kevlar_up]:af_base
-$spawn				                               = "artefacts\af_kevlar"
-kind			                               = i_attach
-class				                               = SCRPTART  	; ����� ������������
-visual                                             = dynamics\equipments\aa\kevlar
-description			                               = st_af_new_kevlar_up_descr
-inv_name			                               = st_af_new_kevlar_up_name
-inv_name_short			                           = st_af_new_kevlar_up_name
-inv_weight			                               = 1.52
-inv_grid_x			                               = 5
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
-cost				                               = 4690 ; 13380 ; 6200
-1icon_layer_x       	                           = 0
-1icon_layer_y      		                           = 0
-1icon_layer_scale   	                           = 1
-1icon_layer        	                               = tch_upgr_ico
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-material = kevlar
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0 ; 0.00065
-hit_absorbation_sect		                       = af_kevlar_up_absorbation
-;additional_inventory_weight	                       = 1.26
-;additional_inventory_weight2	                   = 1.26
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.12
-script_binding                                     = arti_cond_binder.bind
-
-tier = 4
-
-[af_kevlar_up_absorbation]
-burn_immunity 			                           = 0
-strike_immunity 		                           = 0.06
-shock_immunity 			                           = 0
-wound_immunity 			                           = 0.06
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 			                       = 0.06
-fire_wound_immunity  		                       = 0.06
-
-;--=====================================================================
-
-[af_plates_up]:af_base
-$spawn				                               = "artefacts\af_plates_up"
-kind			                               = i_attach
-class				                               = SCRPTART  	; ����� ������������
-visual                                             = dynamics\equipments\aa\plates
-description			                               = st_af_plates_up_descr
-inv_name			                               = st_af_plates_up_name
-inv_name_short			                           = st_af_plates_up_name
-inv_weight			                               = 9.15
-inv_grid_x			                               = 6
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
-cost				                               = 8430 ; 16860 ; 6200
-1icon_layer_x       	                           = 0
-1icon_layer_y      		                           = 0
-1icon_layer_scale   	                           = 1
-1icon_layer        	                               = tch_upgr_ico
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-script_binding                                     = arti_cond_binder.bind
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
-power_restore_speed		                           = 0
-bleeding_restore_speed		                       = 0 ; 0.00118
-hit_absorbation_sect		                       = af_plates_up_absorbation
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.15
-material = metal
-
-tier = 5
-
-[af_plates_up_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0.15
-shock_immunity 			                           = -0.087
-wound_immunity 			                           = 0.15 ; 398 sheets of kevlar eq.
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 			                       = 0.15 ; 399 sheets of kevlar eq.
-fire_wound_immunity  		                       = 0.15 ; 367 sheets of kevlar eq.
 
 ;--=====================================================================
 
 [af_camelbak_up]:af_base
 $spawn				                               = "artefacts\af_camelbak_up"
-kind			                               = i_attach
-class   			                               = SCRPTART  	; ����� ������������
-cform				                               = skeleton
-visual                                             = dynamics\equipments\aa\camelbak
 description			                               = st_af_new_camelbak_up_descr
 inv_name			                               = st_af_new_camelbak_up_name
 inv_name_short			                           = st_af_new_camelbak_up_name
 inv_weight			                               = 1.53
-inv_grid_x			                               = 7
-inv_grid_y			                               = 19
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
 cost				                               = 17620 ; 6200
-script_binding                                     = camelbak_binder.bind ;camelbak_binder.bind
 1icon_layer_x       	                           = 0
 1icon_layer_y      		                           = 0
 1icon_layer_scale   	                           = 1
-1icon_layer        	                               = tch_upgr_ico
-jump_height			                               = 0.0
-;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
-particles_bone			                           = joint2
-af_rank				                               = 0
-lights_enabled                                     = false
-trail_light_color 		                           = 0.9,0.4,0.2
-trail_light_range 		                           = 2.0
-attach_angle_offset		                           = 1.922,1.551,-0.740   
-attach_position_offset                             = 0.15,0.002,0.25
-attach_bone_name		                           = bip01_r_hand
-auto_attach			                               = false
-;�������� ���������� (����������)
-health_restore_speed		                       = 0
-radiation_restore_speed		                       = 0
-satiety_restore_speed		                       = 0
 power_restore_speed			                       = 0.0012	;0.0033
-bleeding_restore_speed		                       = 0
 hit_absorbation_sect		                       = af_camelbak_up_absorbation
-additional_inventory_weight	                       = 0
-additional_inventory_weight2	                   = 0
-artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.07
-use1_functor                = camelbak_binder.try_drink
-use1_action_functor         = camelbak_binder.drink
+script_binding                                     = camelbak_binder.bind
+use1_functor                                       = camelbak_binder.try_drink
+use1_action_functor                                = camelbak_binder.drink
 
 tier = 5
 
-[af_camelbak_up_absorbation]
-burn_immunity 			                           = 0				;������������ ����������
-strike_immunity 		                           = 0
+[af_camelbak_up_absorbation]:af_base_absorbation
 shock_immunity 			                           = -0.092
-wound_immunity 			                           = 0
-radiation_immunity 		                           = 0
-telepatic_immunity 		                           = 0
-chemical_burn_immunity 		                       = 0
-explosion_immunity 			                       = 0
-fire_wound_immunity  		                       = 0
 
 
 ;;;;;;;;;;;;; FIELDCRAFT - CRAFTABLE ITEMS SECTION ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -947,13 +507,8 @@ inv_name_short			                           = fieldcraft_plate_attch_name
 inv_weight			                               = 1.79
 inv_grid_x			                               = 109
 inv_grid_y			                               = 60
-inv_grid_width			                           = 1
-inv_grid_height			                           = 1
 cost				                               = 1912 ; 6380
-jump_height			                               = 0.0
 ;particles		                                   = artefact\af_thermal_idle
-det_show_particles		                           = artefact\af_thermal_show
-det_hide_particles		                           = artefact\af_thermal_hide
 particles_bone			                           = joint2
 af_rank				                               = 0
 lights_enabled                                     = false
@@ -977,7 +532,7 @@ repair_part_bonus	 	                           = 0.09
 
 tier = 2
 
-[fieldcraft_plate_attch_absorbation]
+[fieldcraft_plate_attch_absorbation]:af_base_absorbation
 burn_immunity 			                           = 0				;������������ ����������
 strike_immunity 		                           = 0
 shock_immunity 			                           = 0

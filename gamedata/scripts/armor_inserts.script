@@ -17,16 +17,44 @@ local plate_cond = {}
 local update_plate_condition = true
 local coeff = 0.012			-- used to calculate damage multiplier. By default, kevlar plates hit multiplier is 0.20
 
--- 1st parameter is damage multiplier, 2nd parameter is condition loss on hit for ratio = 1, 3rd parameter is k_ap that penetrates a brand new plate
+--[[
+1st parameter is damage multiplier, 
+2nd parameter is condition loss on hit for ratio = 1, 
+3rd parameter is k_ap that penetrates a brand new plate
+]]
 local plate_sections = {
-    ["af_kevlar"]           = { coeff / ini_sys:r_float_ex("af_kevlar_absorbation","fire_wound_immunity")	 , 0.07, 0.25 },		-- normal kevlar inserts stop FMJ handgun rounds (II or BR3)
-	["af_kevlar_up"]        = { coeff / ini_sys:r_float_ex("af_kevlar_up_absorbation","fire_wound_immunity") , 0.06, 0.35 },		-- better kevlar inserts (IIIA or BR4)
-    ["af_plates"]           = { coeff / ini_sys:r_float_ex("af_plates_absorbation","fire_wound_immunity")	 , 0.20, 0.60 },		-- standard steel plates (III+ or BR4)
-    ["af_plates_up"]        = { coeff / ini_sys:r_float_ex("af_plates_up_absorbation","fire_wound_immunity") , 0.20, 1.10 },		-- next-gen steel plates (IV or BR5)
-	["af_ceramic"]			= { coeff / ini_sys:r_float_ex("af_ceramic_absorbation","fire_wound_immunity")	 , 0.35, 1.30 },		-- normal ceramic plates stop AP large-calibers (IV or BR5)
-	["af_ceramic_up"]		= { coeff / ini_sys:r_float_ex("af_ceramic_up_absorbation","fire_wound_immunity"), 0.30, 1.70 },		-- next-gen ceramic plate can stop .300 (IV or BR6)
-	["af_polymer"]			= { coeff / ini_sys:r_float_ex("af_polymer_absorbation","fire_wound_immunity")	 , 0.10, 0.45 },		-- standard UHMWPE plates (III or BR4)
-	["af_polymer_up"]		= { coeff / ini_sys:r_float_ex("af_polymer_up_absorbation","fire_wound_immunity"), 0.15, 1.10 },		-- next-gen UHMWPE/ceramic composite plates (IV or BR5)
+    ["af_kevlar"] = { 	-- normal kevlar inserts stop FMJ handgun rounds (II or BR3)
+		hit_multiplier = coeff / ini_sys:r_float_ex("af_kevlar_absorbation","fire_wound_immunity"),
+		cond_loss = 0.07, 
+	 	armor_rating = 0.25 },		
+	["af_kevlar_up"] = { -- better kevlar inserts (IIIA or BR4)
+		hit_multiplier = coeff / ini_sys:r_float_ex("af_kevlar_up_absorbation","fire_wound_immunity"),
+		cond_loss = 0.05,
+		armor_rating = 0.35 },		
+    ["af_plates"] = { -- standard steel plates (III+ or BR4)
+		hit_multiplier = coeff / ini_sys:r_float_ex("af_plates_absorbation","fire_wound_immunity"),
+		cond_loss = 0.20,
+		armor_rating = 0.60 },		
+    ["af_plates_up"] = { -- next-gen steel plates (IV or BR5)
+		hit_multiplier = coeff / ini_sys:r_float_ex("af_plates_up_absorbation","fire_wound_immunity"),
+		cond_loss = 0.20,
+		armor_rating = 1.10 },		
+	["af_ceramic"] = { -- normal ceramic plates stop AP large-calibers (IV or BR5)
+		hit_multiplier = coeff / ini_sys:r_float_ex("af_ceramic_absorbation","fire_wound_immunity"),
+		cond_loss = 0.35,
+		armor_rating = 1.30 },		
+	["af_ceramic_up"] = {-- next-gen ceramic plate can stop .300 (IV or BR6)
+		hit_multiplier = coeff / ini_sys:r_float_ex("af_ceramic_up_absorbation","fire_wound_immunity"), 
+		cond_loss = 0.30,
+		armor_rating = 1.70 },		
+	["af_polymer"] = {-- standard UHMWPE plates (III or BR4)
+		hit_multiplier = coeff / ini_sys:r_float_ex("af_polymer_absorbation","fire_wound_immunity"),
+		cond_loss = 0.10, 
+		armor_rating = 0.45 },		
+	["af_polymer_up"] = { -- next-gen UHMWPE/ceramic composite plates (IV or BR5)
+		hit_multiplier = coeff / ini_sys:r_float_ex("af_polymer_up_absorbation","fire_wound_immunity"),
+		cond_loss = 0.15, 
+		armor_rating = 1.10 },		
 }
 
 -- includes chest bones, and any arm bones potentially in the path of the bullet that would hit the chest are included
@@ -59,13 +87,6 @@ if not arti_slot_control then
 end
 --]]
 --==================================== Callbacks =======================================
-local function save_state(mdata) 
-	mdata.plate_cond = plate_cond
-end
-
-local function load_state(mdata) 
-	plate_cond = mdata.plate_cond or {}
-end
 
 -- plate type is 
 -- hit state is 0 for block, 1 for penetration, 2 for breakage, 3 for injury breakage
@@ -112,7 +133,7 @@ local function actor_on_before_hit(shit,bone_id)
 			shit.power = shit.power * 1.5		-- all hits to the head do 50% more damage
 			return								-- and then exit function
 		elseif protected_bones[bone_id] then
-			shit.power = shit.power * 1.25		-- all hits to the chest and back do 25% more damage
+			shit.power = shit.power * 1.2		-- all hits to the chest and back do 20% more damage
 		else
 			return				-- hits to other parts don't trigger this function
 		end
@@ -126,32 +147,24 @@ local function actor_on_before_hit(shit,bone_id)
 	local plate_name
 	
 	-- check belt for plates
-	db.actor:iterate_belt(
-		function (owner, obj)
-			if obj and plate_sections[obj:section()] then
-				plate = obj
-				plate_name = plate:section()
-				hit_multiplier = plate_sections[plate_name][1]
-				
-				if not plate_cond[plate:id()] then
-					found =  true
-					plate_cond[plate:id()] = 1		-- new plates get full condition on register
-				elseif (plate_cond[plate:id()] > 0) then
-					found =  true
-					local cond = plate_cond[plate:id()]
-					plate:set_condition(cond)
-				end
-			end
+	db.actor:iterate_belt( 
+	function (owner, obj)
+		if obj and not found and plate_sections[obj:section()] then
+			plate = obj
+			plate_name = plate:section()
+			hit_multiplier = plate_sections[plate_name].hit_multiplier
+			found = true
 		end
+	end
 	)
 
 	if not found then
 		return
 	end
 	
-	if (plate and plate_cond[plate:id()]) then
+	if (plate ) then
 		local ratio			-- multiplier to plate condition loss calculated from bullet's AP vs armor's defense
-		local armor_rating = plate_sections[plate_name][3]
+		local armor_rating = plate_sections[plate_name].armor_rating
 		local armor_condition = plate:condition()
 		local armor_defense = armor_rating * armor_condition -- effective defense
 		local msg = game.translate_string("st_armor_absorbed")-- "Armor insert absorbed impact"
@@ -159,18 +172,16 @@ local function actor_on_before_hit(shit,bone_id)
 		local shooter = shit.draftsman
 		local wpn = shooter:active_item()
 		local shot_type = 0
-		local material = SYS_GetParam(0, plate:section(), "material") or "kevlar"
 		if (wpn) then
 			-- get ammo armor penetration
 			local wpn_id = wpn:id()
-			local sec = wpn:section()
+			local wpn_sec = wpn:section()
 			local ammo_type_number = wpn:get_ammo_type()
-			local ammo_list = utils_item.get_ammo(sec, wpn_id)
+			local ammo_list = utils_item.get_ammo(wpn_sec, wpn_id)
 			local ammo_section = ammo_list[ammo_type_number+1]
 			local k_ap = ini_sys:r_float_ex(ammo_section, "k_ap") or 0
+
 			ratio = k_ap / armor_defense
-			
-			
 			-- printf("Bullet AP is %s, armor defense is %s. Defense Ratio is %s", k_ap, armor_defense, ratio)
 			-- armor's ability to stop rounds is diminished as it loses condition
 			if (ratio > 1) then
@@ -188,23 +199,18 @@ local function actor_on_before_hit(shit,bone_id)
 		end
 
 		-- decrease plate condition
-		local cond_loss = plate_sections[plate_name][2] * math.max(ratio, 0.5)		-- minimum condition loss is ratio = 0.5
-		-- arti: only deplete if it deals at least this much damage%
-		-- if cond_loss > 0.01  then
-			local cond = clamp(plate:condition() - cond_loss, 0, 1)
-			plate_cond[plate:id()] = cond
-			plate:set_condition(cond)
-		-- end
-		--printdbg("%s condition decreased to %s", plate_name, cond)
+		local cond_loss = plate_sections[plate_name].cond_loss * math.max(ratio, 0.5) -- minimum condition loss is ratio = 0.5
+		local cond = clamp(plate:condition() - cond_loss, 0, 1)
+		plate:set_condition(cond)
+		printdbg("%s condition decreased to %s", plate_name, cond)
 		
 		-- delete broken plates, and notify actor of fully broken plate
-		if plate and plate_cond[plate:id()] < 0.01 then
-			plate_cond[plate:id()] = nil		-- delete plate and clear from storage
+		if plate and plate:condition() < 0.005 then
 			alife_release_id(plate:id())
+			shot_type = shot_type + 2
 			if arti_slot_control_mcm.get_config("ballisticMessage") then
 				local message = game.translate_string("st_armor_broken")--"Ballistic insert has fully broken"
 				news_manager.send_tip(db.actor, message, nil, "swiss_knife", 6000)
-				shot_type = shot_type + 2
 			end
 		end
 		
@@ -213,55 +219,13 @@ local function actor_on_before_hit(shit,bone_id)
 			actor_menu.set_msg(1, msg, 3)
 		end		
 		-- play appropriate sounds
+		local material = SYS_GetParam(0, plate:section(), "material") or "kevlar"
 		play_appropriate_sounds(material, shot_type)
-		-- extra sound effect
-		-- local path = "actor\\bullet_hit_3"
-		-- utils_obj.play_sound(path, 3)
 
-	end
-end
-
--- on game load, equipped plate condition will be updated the first time the inventory is opened
-local function actor_menu_opened(hud_name)
-	if update_plate_condition and (hud_name == "UIInventory") then
-		update_plate_condition = false
-		-- update plate condition when inventory is opened
-		db.actor:iterate_belt(
-			function (owner, obj)
-				if obj and plate_sections[obj:section()] then
-					if plate_cond[obj:id()] then
-						local cond = plate_cond[obj:id()]
-						obj:set_condition(cond)
-					end
-				end
-			end
-		)
-	end
-end
-
--- equipping a plate from inventory also updates condition
-local function actor_add_plate(obj)
-	if obj and plate_sections[obj:section()] then
-		if plate_cond[obj:id()] then
-			local cond = plate_cond[obj:id()]
-			obj:set_condition(cond)
-		end
-	end
-end
-
--- unregister plates that are deleted
-local function server_entity_on_unregister(se_obj)
-	if plate_cond[se_obj.id] then
-		plate_cond[se_obj.id] = nil
 	end
 end
 
 function on_game_start()
-	if (USE_MARSHAL) then 
-		RegisterScriptCallback("save_state",save_state)
-		RegisterScriptCallback("load_state",load_state)
-	end
-
 	RegisterScriptCallback("actor_item_to_belt",actor_add_plate)
 	RegisterScriptCallback("GUI_on_show",actor_menu_opened)
 	RegisterScriptCallback("actor_on_before_hit",actor_on_before_hit)
