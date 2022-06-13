@@ -33,7 +33,14 @@ print_dbg = arti_slot_control_mcm.print_dbg
 
 function register(id)
     print_dbg("Checking %s", id)
-    if autodoc_cap[id] then return end
+    if autodoc_cap[id] then 
+        if autodoc_cap[id].stimpack_n then
+            autodoc_cap[id].stimpack_n = nil
+            autodoc_cap[id].stimpack_army_n = nil
+        else
+            return 
+        end
+    end
     print_dbg("Registering autodoc id %s", id)
     autodoc_cap[id] = {
         meds = {
