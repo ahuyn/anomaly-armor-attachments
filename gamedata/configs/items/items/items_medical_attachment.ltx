@@ -1,10 +1,73 @@
 ; no-animation versions of the stimpacks
-[stimpack_n]:stimpack
-inv_grid_width     			                       = 0
+; [stimpack_n]:stimpack
+; inv_grid_width     			                       = 0
+; inv_grid_height    			                       = 0
+; [stimpack_army_n]:stimpack_army
+; inv_grid_width     			                       = 0
+; inv_grid_height    			                       = 0
+; [stimpack_scientic_n]:stimpack_scientic
+; inv_grid_width     			                       = 0
+; inv_grid_height    			                       = 0
+
+[autodoc_hp_1]:booster ; 50% hp / 10 seconds
+$spawn 						                       = "food and drugs\medkit"
+visual						                       = dynamics\equipments\medical\stim1.ogf
+kind			                                   = i_medical
+description					                       = st_stim_none
+cost						                       = 3000
+inv_name					                       = st_stim_none
+inv_name_short				                       = st_stim_none
+inv_weight					                       = 0.1
+inv_grid_width     			                       = 1
 inv_grid_height    			                       = 0
-[stimpack_army_n]:stimpack_army
-inv_grid_width     			                       = 0
-inv_grid_height    			                       = 0
-[stimpack_scientic_n]:stimpack_scientic
-inv_grid_width     			                       = 0
-inv_grid_height    			                       = 0
+inv_grid_x         			                       = 0
+inv_grid_y         			                       = 66
+upgr_icon_path								 	   = ui\actor_items\ui_actor_items_2
+upgr_icon_x								 	 	   = 0
+upgr_icon_y								 	 	   = 350
+upgr_icon_width						 	 	 	   = 150
+upgr_icon_height						 	 	   = 150
+use_sound					                       = interface\inv_stim_4p3
+snd_on_take					= nil
+
+boost_time					                       = 6
+boost_health_restore		                       = 0.01
+eat_alcohol					                       = 0.035
+eat_satiety 				                       = -0.082
+eat_sleepiness				                       = 0.022
+eat_thirstiness				                       = 0.05
+
+tier = 2
+
+[autodoc_hp_2]:autodoc_hp_1
+
+boost_time					                       = 6
+boost_health_restore		                       = 0.02
+eat_alcohol					                       = 0.1
+eat_satiety 				                       = -0.164
+eat_sleepiness				                       = 0.044
+eat_thirstiness				                       = 0.1
+
+[autodoc_rads_1]:autodoc_hp_1
+boost_time					                       = 6
+boost_health_restore		                       = 0
+boost_radiation_restore		                       = 0.0046
+eat_satiety 				                       = -0.172
+eat_sleepiness				                       = 0.062
+eat_thirstiness				                       = 0.1
+eat_health					                       = -0.03
+
+
+[autodoc_dmgres_1]:autodoc_hp_1
+boost_time					                       = 200
+boost_bleeding_restore		                       = 0.00146
+boost_health_restore		                       = 0
+eat_alcohol					                       = 0.01
+eat_satiety					                       = -0.07
+eat_sleepiness				                       = 0.04
+eat_thirstiness				                       = 0.02
+eat_health					                       = 0.03
+boost_wound_immunity		                       = 0.374
+boost_fire_wound_immunity	                       = 0.188
+boost_explosion_immunity	                       = 0.344
+boost_strike_immunity		                       = 0.266

@@ -226,8 +226,5 @@ local function actor_on_before_hit(shit,bone_id)
 end
 
 function on_game_start()
-	RegisterScriptCallback("actor_item_to_belt",actor_add_plate)
-	RegisterScriptCallback("GUI_on_show",actor_menu_opened)
 	RegisterScriptCallback("actor_on_before_hit",actor_on_before_hit)
-	RegisterScriptCallback("server_entity_on_unregister", server_entity_on_unregister)
 end

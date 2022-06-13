@@ -33,105 +33,41 @@
     <text>drink</text>
   </string>
 
-  <string id="st_ass_name">
-    <text>Anomaly Suppression System</text>
-  </string>
-  <string id="st_ass_descr">
-    <text>
-      Advanced device with several scanners, transmitters, and emitters for radiowaves, electromagnetic waves, and high-pitch sonar waves. One of the first devices designed by the Ministry of Science to protect their field agents, this sophisticated machine embodies Suslov's 'tapping the fish tank' theory, where certain anomalies can be temporarily disrupted if enough environmental disturbance is introduced. The device automatically scans local anomalies and emits a combined neutralizing pulse in response to anomaly activation, effectively shutting it down temporarily and negating all hazard. Devices such as these form the bulk of active anomalous defense systems in the SSP and SEVA suits, which both feature integrated versions of this device. The device comes with a self-recharging battery for the suppression pulse, however, the onboard computer needs time to recalibrate and recalculate field changes that occur after each pulse. The device can be combined with the onboard support systems of the SSP and SEVA suits to enhance its effectiveness and recharge time. 
-      \n \n
-      %c[ui_gray_2]PROPERTIES:\n
-      %c[d_cyan] • %c[ui_gray_2] technological item\n
-      %c[d_cyan] • %c[ui_gray_2] high quality\n
-      %c[d_cyan] • %c[ui_gray_2] median recharge of 60 seconds\n
-      %c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
-    </text>
-  </string>
-
-
-  <string id="st_ass_up_name">
-    <text>Advanced Anomaly Suppression System</text>
-  </string>
-  <string id="st_ass_up_descr">
-    <text>
-      Next-generation anomaly suppression device incorporating telemetry data from rare artifact samples to compute suppression solutions more quickly. This device is the pinnacle of anomaly protection systems and is in extremely high demand with all science personnel, not to mention stalkers themselves. Additional data from the incorporated artifact sample allows pulses to be transmitted with less disturbance to the environment, allowing for recalibration cycles to occur more frequently. In addition, the device emits a constant field that passively reduces the strength of nearby anomaly fields. The device can be combined with the onboard support systems of the SSP and SEVA suits to enhance its effectiveness and recharge time. 
-      \n \n
-      %c[ui_gray_2]PROPERTIES:\n
-      %c[d_cyan] • %c[ui_gray_2] technological item\n
-      %c[d_cyan] • %c[ui_gray_2] high quality\n
-      %c[d_cyan] • %c[ui_gray_2] median recharge of 40 seconds\n
-      %c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
-    </text>
-  </string>
-
-  <string id="st_lsm">
-    <text>SLSA 0.06.8 EM Autodoc Module</text>
-  </string>
-  <string id="st_lsm_desc">
-    <text>An outdated military-issue SLSA (System of Life Support, Automatic) Autodoc Module. For a short period of time following the Second Chernobyl Incident, the Ukrainian SSU invested in the development of a field-portable automatic doctor system to improve the effectiveness of their field personnel, especially in special situations where heavy unconventional resistance was expected, supply lines were difficult to maintain, and aid stations were impractical to set up due to the inherent lethality of the Zone itself. These field doctor units were issued to several combat and exploration battalions, and while effective, they are quite unpopular amongst the standing armed forces. This unit consists of a primary doctor unit that is worn on the left hip, connected to an adjustable forearm cuff by two sterile rubber tubes and one electronic cable. When the doctor unit detects anomalies in blood pressure and heart rate, stabilizer agents, painkillers and coagulants are issued in appropriate quantities via quick-inject needles in the forearm cuff. The system is designed to be worn under standard combat fatigues and comes equipped with a speaker unit to alert the user, which have almost universally run out of battery.\n
-      The SLSA has two reserve tanks. One is the standard tank refillable with standard stimpacks, and the other is an emergency tank filled with concentrated stimpacks, The Autodoc is programmed to space out doses by at least 15 seconds to not overdose and kill the user.
-      \n \n
-      %c[ui_gray_2]PROPERTIES:\n
-      %c[d_cyan] • %c[ui_gray_2] technological item\n
-      %c[d_cyan] • %c[ui_gray_2] high quality\n
-      %c[d_cyan] • %c[ui_gray_2] compatibility: standard, army stimpacks\n
-      %c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
-    </text>
+  <string id="st_surge_compat">
+    <text>compatible components:</text>
   </string>
   
-  <string id="st_lsm_up">
-    <text>SLSA 0.06.9 EM Improved Autodoc Module</text>
+  <string id="st_autodoc_compat">
+    <text>compatible medicines:</text>
   </string>
-  <string id="st_lsm_up_desc">
-    <text>An enhanced Autodoc Module improved with Zone technology. Based on the original Autodoc design, these advanced modules were designed using research and specimens gathered in the Zone. Application of carefully contained healing artifacts has both boosted the effectiveness of the administered medicine as well as passively encouraging cell growth. Small numbers of these Autodoc Modules have been produced owing in part to the difficulty in sourcing the right manufacturing materials. Despite that, they are highly popular and sought after amongst Spetsnaz units and Ecologists, even though the pain of the forearm injector is arguably worse than before.\n
-      The SLSA has two reserve tanks. One is the standard tank refillable with standard stimpacks, and the other is an emergency tank filled with concentrated stimpacks, The Autodoc is programmed to space out doses by at least 15 seconds to not overdose and kill the user.
-      \n \n
-      %c[ui_gray_2]PROPERTIES:\n
-      %c[d_cyan] • %c[ui_gray_2] technological item\n
-      %c[d_cyan] • %c[ui_gray_2] high quality\n
-      %c[d_cyan] • %c[ui_gray_2] compatibility: standard, army stimpacks\n
-      %c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
-    </text>
+
+  <string id="st_autodoc_capacity_hp">
+    <text>Health Stabilizer: </text>
   </string>
-  
-  <string id="st_autodoc_fill_stimpack_n1">
-    <text>MEDICAL RESERVE TANK [STANDARD_N1] FILLED TO [20]% CAPACITY</text>
+  <string id="st_autodoc_capacity_rads">
+    <text>Anti-Radiation Medicine: </text>
   </string>
-  <string id="st_autodoc_fill_stimpack_n2">
-    <text>MEDICAL RESERVE TANK [STANDARD_N1] FILLED TO [40]% CAPACITY</text>
-  </string>
-  <string id="st_autodoc_fill_stimpack_n3">
-    <text>MEDICAL RESERVE TANK [STANDARD_N1] FILLED TO [60]% CAPACITY</text>
-  </string>
-  <string id="st_autodoc_fill_stimpack_n4">
-    <text>MEDICAL RESERVE TANK [STANDARD_N1] FILLED TO [80]% CAPACITY</text>
-  </string>
-  <string id="st_autodoc_fill_stimpack_n5">
-    <text>MEDICAL RESERVE TANK [STANDARD_N1] FILLED TO [100]% CAPACITY</text>
-  </string>
-  <string id="st_autodoc_fill_stimpack_army_n1">
-    <text>MEDICAL RESERVE TANK [EMERGENCY_N2] FILLED TO [50]% CAPACITY</text>
-  </string>
-  <string id="st_autodoc_fill_stimpack_army_n2">
-    <text>MEDICAL RESERVE TANK [EMERGENCY_N2] FILLED TO [100]% CAPACITY</text>
+  <string id="st_autodoc_capacity_dmgres">
+    <text>Morphine Reservoir: </text>
   </string>
   <string id="st_autodoc_full">
-    <text>RESERVE FLUID CAPACITY: [100]%</text>
-
+    <text>Reservoir full.</text>
   </string>
-  <string id="st_autodoc_medicate_1">
-    <text>WARNING: VITAL SIGNS DEGRADED. ADMINISTERING STANDARD MEDICAL ATTENTION.</text>
+  
+  <string id="st_autodoc_enable">
+    <text>enable </text>
   </string>
-
-  <string id="st_autodoc_medicate_2">
-    <text>WARNING: VITAL SIGNS CRITICAL. ADMINISTERING EMERGENCY MEDICAL ATTENTION.</text>
+  <string id="st_autodoc_disable">
+    <text>disable </text>
   </string>
-
-  <string id="st_autodoc_capacity_stimpack_n">
-    <text>Standard stimpacks:</text>
+  <string id="st_autodoc_hp">
+    <text>automatic healing</text>
   </string>
-  <string id="st_autodoc_capacity_stimpack_army_n">
-    <text>Military stimpacks:</text>
+  <string id="st_autodoc_rads">
+    <text>automatic antirads</text>
+  </string>
+  <string id="st_autodoc_dmgres">
+    <text>automatic morphine</text>
   </string>
 
   <string id="st_armor_penetrated">
@@ -167,6 +103,9 @@
   <string id="ui_mcm_slotControl_ballisticMessage">
     <text>Notify player of ballistic insert condition.</text>
   </string>
+  <string id="ui_mcm_slotControl_ballisticRepair">
+    <text>Allow ballistic insert repair at technicians.</text>
+  </string>
   <string id="ui_mcm_slotControl_debug">
     <text>Debug Logs</text>
   </string>
@@ -176,6 +115,19 @@
   <string id="ui_mcm_slotControl_plate_up_chance">
     <text>Chance to loot upgraded armor plates (multiplicative)</text>
   </string>
+  <string id="ui_mcm_slotControl_hp">
+    <text>LSM Low Health Threshold</text>
+  </string>
+  <string id="ui_mcm_slotControl_hp_crit">
+    <text>LSM Critical Health Threshold</text>
+  </string>
+  <string id="ui_mcm_slotControl_rads">
+    <text>LSM Radiation Threshold</text>
+  </string>
+  
+	<string id="st_stim_none">
+		<text>Not a Stim</text>
+	</string>
   
 	
 	<string id="st_dot">

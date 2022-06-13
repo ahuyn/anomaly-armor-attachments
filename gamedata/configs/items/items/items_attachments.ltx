@@ -5,7 +5,7 @@
 
 
 
-; Environmental Protection Modules
+; Environmental Control Units
 
 [af_surge]:af_base ; surge prot, 
 $spawn				                               = "artefacts\af_surge"
@@ -35,6 +35,7 @@ hit_absorbation_sect		                       = af_surge_absorbation
 artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.08
 script_binding                                     = arti_cond_binder.bind
+surge_protection                                   = 0.4
 
 tier = 2
 
@@ -56,6 +57,7 @@ hit_absorbation_sect		                       = af_surge_up_absorbation
 
 repair_part_bonus	 	                           = 0.08
 script_binding                                     = arti_cond_binder.bind
+surge_protection                                   = 0.25
 
 tier = 4
 
@@ -145,7 +147,16 @@ hit_absorbation_sect		                       = af_cooler_absorbation
 
 artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.09
-script_binding                                     = autodoc_binder.bind
+stim_cooldown                                      = 15
+
+use2_functor                			           = autodoc_binder.ed_hp
+use2_action_functor         		               = autodoc_binder.do_ed_hp
+
+use3_functor                			           = autodoc_binder.ed_dmgres
+use3_action_functor         		               = autodoc_binder.do_ed_dmgres
+
+use4_functor                			           = autodoc_binder.ed_rads
+use4_action_functor         		               = autodoc_binder.do_ed_rads
 
 tier = 2
 
@@ -327,6 +338,9 @@ hit_absorbation_sect		                       = af_kevlar_absorbation
 
 artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.06
+allow_repair                             		       = false
+cond_part										       = true ;-- for ui_item.script
+repair_type				                               = ballistic
 material = kevlar
 script_binding                                     = arti_cond_binder.bind
 
@@ -351,6 +365,7 @@ cost				                               = 4690 ; 13380 ; 6200
 1icon_layer_x       	                           = 0
 1icon_layer_y      		                           = 0
 1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
 hit_absorbation_sect		                       = af_kevlar_up_absorbation
 repair_part_bonus	 	                           = 0.12
 material                                           = kevlar
@@ -387,6 +402,9 @@ attach_angle_offset		                           = 1.922,1.551,-0.740
 attach_position_offset                             = 0.15,0.002,0.25
 attach_bone_name		                           = bip01_r_hand
 auto_attach			                               = false
+allow_repair                             		       = false
+cond_part										       = true ;-- for ui_item.script
+repair_type				                               = ballistic
 hit_absorbation_sect		                       = af_plates_absorbation
 
 artefact_activation_seq		                       = af_activation_bold

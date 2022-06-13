@@ -27,15 +27,13 @@ end
 
 function on_belt(id)
     local found = false
-    db.actor:iterate_belt(
-            function (owner, obj)
-                -- printf("checking object id %s, section %s", obj:id(), obj:section())
-                if obj:id() == id then
-                    -- printf("found it")
-                    found =  true
-				end
-			end
-        )
+    db.actor:iterate_belt( function (owner, obj)
+        -- printf("checking object id %s, section %s", obj:id(), obj:section())
+        if obj:id() == id then
+            -- printf("found it")
+            found =  true
+        end
+    end)
     return found
 end
 

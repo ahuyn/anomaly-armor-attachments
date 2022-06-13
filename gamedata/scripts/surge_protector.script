@@ -2,12 +2,7 @@
 
 
 print_dbg = arti_slot_control_mcm.print_dbg
-
-local surges = {
-    ["af_surge"] = 0.4,
-    ["af_surge_up"] = 0.25,
-}
-
+gc = game.translate_string
 local MIN = 0.0001
 local MAX = 0.999
 
@@ -15,12 +10,12 @@ function actor_on_before_hit(shit,bone_id)
     if shit.type ~= hit.shock then return end
     local surge = nil
     db.actor:iterate_belt(function(owner, obj)
-        if surges[obj:section()] then
+        if SYS_GetParam(2, obj:section(), "surge_protection") then
             surge = obj
         end
     end)
     if surge then
-        local to_drain = shit.power * surges[surge:section()]
+        local to_drain = shit.power * SYS_GetParam(2, surge:section(), "surge_protection")
         print_dbg("tanked a shock of strength %s, reducing by %s", shit.power, to_drain)
         local cond = surge:condition()
         if cond <= to_drain then
@@ -46,7 +41,7 @@ function on_item_drag_dropped(repair_item, surge, slot_from, slot_to)
     local surge_sec = surge:section()
     
     
-    if repair_table[repair_sec] == nil or not surges[surge_sec] then
+    if repair_table[repair_sec] == nil or not SYS_GetParam(2, surge_sec, "surge_protection") then
         return
     end
 
@@ -63,7 +58,7 @@ NameCustom = ui_inventory.UIInventory.Name_Custom
 -- hijack functions for backpacks
 function ui_inventory.UIInventory:Name_Custom(obj, bag, temp, i)
 	obj = self:CheckItem(obj,"Name_Custom " .. i)
-	if i == 3 and surges[obj:section()] and obj:condition() < MAX then -- menu field strip
+	if i == 3 and SYS_GetParam(2, obj:section(), "surge_protection") and obj:condition() < MAX then -- menu field strip
 		return "ui_inv_repair"
 	else
 		return NameCustom(self, obj, bag, temp, i)
@@ -73,7 +68,7 @@ end
 ActionCustom = ui_inventory.UIInventory.Action_Custom
 function ui_inventory.UIInventory:Action_Custom(obj, bag, temp, i)
 	obj = self:CheckItem(obj,"Action_Custom " .. i)
-	if i == 3 and surges[obj:section()] and obj:condition() < MAX then -- menu field strip
+	if i == 3 and SYS_GetParam(2, obj:section(), "surge_protection")  and obj:condition() < MAX then -- menu field strip
 		repair_surge(obj)
 	else
 		ActionCustom(self, obj, bag, temp, i)
@@ -99,6 +94,26 @@ function repair_surge(surge)
         surge:set_condition(MAX - to_restore)
     end
 
+end
+local clr_2  = utils_xml.get_color("ui_gray_1")
+
+BuildFooter = ui_item.build_desc_footer  -- obj needed
+function ui_item.build_desc_footer(obj, sec, str)
+    
+	str = str or gc(ini_sys:r_string_ex(sec,"description"))
+	if (not str) then return "" end
+	str = BuildFooter(obj, sec, str)
+	local _str = ""
+
+    if SYS_GetParam(2, sec, "surge_protection") then
+        _str = _str .. clr_2 .. "  " .. gc("st_dot") .." " .. gc("st_surge_compat") .. " "
+        for k,v in pairs(repair_table) do
+            _str = _str .. ui_item.get_sec_short_name(k) .. ", "
+        end
+        _str = _str:sub(1, -3)
+        str = str .. _str
+    end
+    return str
 end
 
 function on_game_start()

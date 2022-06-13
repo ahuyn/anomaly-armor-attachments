@@ -58,7 +58,6 @@ end
 function on_move(obj)
     if is_camelbak(obj) or current_camel == 0 then
         scan_belt()
-        print_dbg("camel moved to belt")
     end
 end
 
@@ -175,8 +174,8 @@ local function load_state(mdata)
 end
 
 local function se_device_on_unregister(se_obj, typ)
-		local id = se_obj.id
-		camel_cond[id] = nil
+    local id = se_obj.id
+    camel_cond[id] = nil
 	--end
 end
 
@@ -185,7 +184,7 @@ function on_game_start()
     RegisterScriptCallback("save_state",save_state)
     RegisterScriptCallback("load_state",load_state)
 	RegisterScriptCallback("server_entity_on_unregister",se_device_on_unregister)
-    RegisterScriptCallback("actor_item_to_slot",on_move)
+    RegisterScriptCallback("actor_item_to_belt",on_move)
 	RegisterScriptCallback("actor_item_to_ruck",on_move)
     RegisterScriptCallback("ActorMenu_on_item_drag_drop",on_item_drag_dropped)
 end

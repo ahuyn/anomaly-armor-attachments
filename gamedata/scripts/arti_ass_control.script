@@ -43,6 +43,7 @@ function death_manager.keep_item(npc, itm)
     if SYS_GetParam(1, itm:section(), "ass_cooldown") and math.random() > keep_chance then
         alife_release(itm)
     end
+    KeepItem(npc, itm)
 end
 
 function activate_immunity(val)
