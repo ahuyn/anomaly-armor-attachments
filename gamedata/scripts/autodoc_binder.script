@@ -32,11 +32,17 @@ get_config = arti_slot_control_mcm.get_config
 print_dbg = arti_slot_control_mcm.print_dbg
 
 function register(id)
-    print_dbg("Checking %s", id)
     if autodoc_cap[id] then 
         if autodoc_cap[id].stimpack_n then
             autodoc_cap[id].stimpack_n = nil
             autodoc_cap[id].stimpack_army_n = nil
+        elseif autodoc_cap[id].cfg and autodoc_cap[id].cfg.hp_enabled then
+            autodoc_cap[id].cfg.hp_enabled = nil
+            autodoc_cap[id].cfg.rads_enabled = nil
+            autodoc_cap[id].cfg.dmgres_enabled = nil
+            autodoc_cap[id].cfg.hp = true
+            autodoc_cap[id].cfg.rads = true
+            autodoc_cap[id].cfg.dmgres = true
         else
             return 
         end
@@ -49,9 +55,9 @@ function register(id)
             dmgres = 0,
         },
         cfg = {
-            hp_enabled = true,
-            rads_enabled = true,
-            dmgres_enabled = true
+            hp = true,
+            rads = true,
+            dmgres = true
         }
     }
 end
@@ -116,7 +122,11 @@ end
 function get_med(id, typ, level)
     print_dbg("Getting med for %s, %s", typ, level)
     local cap = autodoc_cap[id].meds
-    if not cap[typ.."_enabled"] then return end
+    local cfg = autodoc_cap[id].cfg
+    if not cfg[typ] then 
+        print_dbg("%s is disabled", typ)
+        return 
+    end
     while cap[typ] < level do
         level = level - 1
     end
@@ -125,6 +135,7 @@ function get_med(id, typ, level)
         cap[typ] = cap[typ] - level
         return "autodoc_" .. typ .. "_" .. level
     end
+    print_dbg("No eligible medicine found for %s", typ)
 end
 
 function timer_eat(id)
@@ -202,13 +213,13 @@ end
 
 function ed_autodoc(id, typ)
     if not autodoc_cap[id] then register(id) end
-    local action = autodoc_cap[id].cfg[typ.."_enabled"] and "_disable" or "_enable"
+    local action = autodoc_cap[id].cfg[typ] and "_disable" or "_enable"
     return gc("st_autodoc"..action) .. " " .. gc("st_autodoc_"..typ)
 end
 
 function do_ed_autodoc(id, typ)
     if not autodoc_cap[id] then register(id) end
-    autodoc_cap[id].cfg[typ.."_enabled"] = not autodoc_cap[id].cfg[typ.."_enabled"] 
+    autodoc_cap[id].cfg[typ] = not autodoc_cap[id].cfg[typ] 
 end
 
 local clr_2  = utils_xml.get_color("ui_gray_1")
@@ -224,10 +235,9 @@ function ui_item.build_desc_header(obj, sec, str)
         local con = autodoc_cap[id].meds or {}
         local cfg = autodoc_cap[id].cfg
         for k,v in pairs(con) do
-            local percentage = v/10
             local clr = utils_xml.get_color_con(v)
-            local ed = cfg[k.."_enabled"] and "st_autodoc_enable" or "st_autodoc_disable"
-            _str = _str .. clr_2 .. " " .. gc("st_dot") .." " .. gc("st_autodoc_capacity_"..k) .. " " .. clr .. math.floor(percentage*100) .. "% "  .. clr_2 ..  "(" .. gc(ed) .. "d)".. "\\n"
+            local ed = cfg[k] and "st_autodoc_enable" or "st_autodoc_disable"
+            _str = _str .. clr_2 .. " " .. gc("st_dot") .." " .. gc("st_autodoc_capacity_"..k) .. " " .. clr .. math.floor(v*10) .. "% "  .. clr_2 ..  "(" .. gc(ed) .. "d)".. "\\n"
         end
         _str = _str .. " \\n" 
         return _str .. str

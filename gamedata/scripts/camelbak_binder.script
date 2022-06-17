@@ -11,8 +11,8 @@ end
 
 
 local water_table = {
-    ["mineral_water"] = 0.3,
-    ["flask"] = 0.2
+    mineral_water = 0.3,
+    flask = 0.2
 }
 local MIN = 0.001
 local MAX = 0.999
@@ -155,7 +155,6 @@ function camelbak_binder:net_spawn(se_abstract)
 end
 
 function camelbak_binder:net_destroy()
-	--print_dbg("[%s] destroyed: %s", self.object:name())
 	object_binder.net_destroy(self)
 end
 

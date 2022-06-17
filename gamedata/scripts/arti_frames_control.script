@@ -48,7 +48,6 @@ function func_install_frame(frame)
 end
 
 function install_frame(backpack, frame)
-    print_dbg("do install frame")
     backpacks[backpack:id()] = frame:section()
     alife_release(frame)
     update_weight(backpack)
