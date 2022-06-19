@@ -18,7 +18,7 @@ function on_item_drag_dropped(frame, backpack, slot_from, slot_to)
 	local sec_f = frame:section() -- frame
     
     -- validate frame
-    if SYS_GetParam(0, sec_f, "use2_functor") == "arti_frames_control.check_install_frame" then  
+    if SYS_GetParam(0, sec_f, "use2_functor") ~= "arti_frames_control.check_install_frame" then  
         print_dbg("not frame")
         return 
     end
