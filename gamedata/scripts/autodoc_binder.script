@@ -99,7 +99,7 @@ function check_actor()
         add.dmgres = 1
     end
 
-    if db.actor.radiation > get_config("rads") then
+    if db.actor.radiation > get_config("rads")/3870 then
         add.rads = 1
     end
 
@@ -114,7 +114,12 @@ function check_actor()
             cooldown = true
         end
     end
-    autodoc_last_sip = curr_time + (cooldown and cdr or step)
+    if cooldown then
+        autodoc_last_sip = curr_time + cdr
+        utils_obj.play_sound("attachments\\autodoc"..math.random(2), 2)
+    else
+        autodoc_last_sip = curr_time + step
+    end
     return true
 end
 
@@ -237,15 +242,16 @@ function ui_item.build_desc_header(obj, sec, str)
         for k,v in pairs(con) do
             local clr = utils_xml.get_color_con(v)
             local ed = cfg[k] and "st_autodoc_enable" or "st_autodoc_disable"
-            _str = _str .. clr_2 .. " " .. gc("st_dot") .." " .. gc("st_autodoc_capacity_"..k) .. " " .. clr .. math.floor(v*10) .. "% "  .. clr_2 ..  "(" .. gc(ed) .. "d)".. "\\n"
+            local pad = k == "hp" and "  " or ""
+            _str = _str .. clr_2 .. " " .. gc("st_dot") .." " .. string.format("%-25s "..pad, gc("st_autodoc_capacity_"..k))  .. clr .. string.format("%2s", math.floor(v*10)) .. "% "  .. clr_2 ..  "(" .. gc(ed) .. "d)".. "\\n"
         end
         _str = _str .. " \\n" 
         return _str .. str
     else
         return BuildHeader(obj, sec, str)
     end
-end
 
+end
 
 BuildFooter = ui_item.build_desc_footer  -- obj needed
 function ui_item.build_desc_footer(obj, sec, str)
