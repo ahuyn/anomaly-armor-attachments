@@ -13,7 +13,12 @@
 --]]
 
 --===================================== Variables ====================================
-local plate_cond = {}
+
+local ini_conf = ini_file("items\\settings\\plate_config.ltx")
+local ini_armor = ini_file("items\\settings\\plate_armors.ltx")
+
+gc = game.translate_string
+local plates = {}
 local update_plate_condition = true
 local coeff = 0.012			-- used to calculate damage multiplier. By default, kevlar plates hit multiplier is 0.20
 
@@ -24,7 +29,7 @@ local coeff = 0.012			-- used to calculate damage multiplier. By default, kevlar
 ]]
 local plate_sections = {
     ["af_kevlar"] = { 	-- normal kevlar inserts stop FMJ handgun rounds (II or BR3)
-		hit_multiplier = coeff / ini_sys:r_float_ex("af_kevlar_absorbation","fire_wound_immunity"),
+		hit_multiplier = coeff / ini_sys:r_float_ex("af_kevlar_absorbation","fire_wound_immunity"), 
 		cond_loss = 0.07, 
 	 	armor_rating = 0.25 },		
 	["af_kevlar_up"] = { -- better kevlar inserts (IIIA or BR4)
@@ -141,90 +146,230 @@ local function actor_on_before_hit(shit,bone_id)
 		return			-- only trigger for bullet wounds
 	end
 	
-	local found = false
-	local plate
-	local hit_multiplier
-	local plate_name
+	-- local found = false
+	-- local plate
+	-- local hit_multiplier
+	-- local plate_name
 	
-	-- check belt for plates
-	db.actor:iterate_belt( 
-	function (owner, obj)
-		if obj and not found and plate_sections[obj:section()] then
-			plate = obj
-			plate_name = plate:section()
-			hit_multiplier = plate_sections[plate_name].hit_multiplier
-			found = true
-		end
-	end
-	)
+	-- -- check belt for plates
+	-- db.actor:iterate_belt( 
+	-- function (owner, obj)
+	-- 	if obj and not found and plate_sections[obj:section()] then
+	-- 		plate = obj
+	-- 		plate_name = plate:section()
+	-- 		hit_multiplier = plate_sections[plate_name].hit_multiplier
+	-- 		found = true
+	-- 	end
+	-- end
+	-- )
+	local outfit = db.actor:item_in_slot(7)
 
-	if not found then
+	if not outfit or not plates[outfit:id()] then
 		return
 	end
 	
-	if (plate ) then
-		local ratio			-- multiplier to plate condition loss calculated from bullet's AP vs armor's defense
-		local armor_rating = plate_sections[plate_name].armor_rating
-		local armor_condition = plate:condition()
-		local armor_defense = armor_rating * armor_condition -- effective defense
-		local msg = game.translate_string("st_armor_absorbed")-- "Armor insert absorbed impact"
-		
-		local shooter = shit.draftsman
-		local wpn = shooter:active_item()
-		local shot_type = 0
-		if (wpn) then
-			-- get ammo armor penetration
-			local wpn_id = wpn:id()
-			local wpn_sec = wpn:section()
-			local ammo_type_number = wpn:get_ammo_type()
-			local ammo_list = utils_item.get_ammo(wpn_sec, wpn_id)
-			local ammo_section = ammo_list[ammo_type_number+1]
-			local k_ap = ini_sys:r_float_ex(ammo_section, "k_ap") or 0
+	local plate = plates[outfit:id()]
+	local plate_name = plate.section
 
-			ratio = k_ap / armor_defense
-			-- printf("Bullet AP is %s, armor defense is %s. Defense Ratio is %s", k_ap, armor_defense, ratio)
-			-- armor's ability to stop rounds is diminished as it loses condition
-			if (ratio > 1) then
-				printdbg("Bullet with AP %s penetrated %s", k_ap, plate_name)
-				shit.power = shit.power * 0.9					-- penetrating the armor still consumes a small amount of the projectile's energy
-				msg = game.translate_string("st_armor_penetrated")--"Bullet penetrated armor insert!"
-				shot_type = 1
-			else
-				shit.power = shit.power * hit_multiplier		-- reduce damage
-			end
+	local hit_multiplier = ini_conf:r_float_ex(plate_name, "hit_multiplier")
+	local ratio			-- multiplier to plate condition loss calculated from bullet's AP vs armor's defense
+	local armor_rating = ini_conf:r_float_ex(plate_name, "armor_rating")
+	local armor_condition = plate.cond
+	local armor_defense = armor_rating * armor_condition -- effective defense
+	local msg = game.translate_string("st_armor_absorbed")-- "Armor insert absorbed impact"
+	
+	local shooter = shit.draftsman
+	local wpn = shooter:active_item()
+	local shot_type = 0
+	if (wpn) then
+		-- get ammo armor penetration
+		local wpn_id = wpn:id()
+		local wpn_sec = wpn:section()
+		local ammo_type_number = wpn:get_ammo_type()
+		local ammo_list = utils_item.get_ammo(wpn_sec, wpn_id)
+		local ammo_section = ammo_list[ammo_type_number+1]
+		local k_ap = SYS_GetParam(2, ammo_section, "k_ap") or 0
+
+		ratio = k_ap / armor_defense
+		-- printf("Bullet AP is %s, armor defense is %s. Defense Ratio is %s", k_ap, armor_defense, ratio)
+		-- armor's ability to stop rounds is diminished as it loses condition
+		if (ratio > 1) then
+			printdbg("Bullet with AP %s penetrated %s", k_ap, plate_name)
+			shit.power = shit.power * 0.9					-- penetrating the armor still consumes a small amount of the projectile's energy
+			msg = game.translate_string("st_armor_penetrated")--"Bullet penetrated armor insert!"
+			shot_type = 1
 		else
-			-- grenade shrapnel is blocked by all inserts
-			ratio = 0.05 / armor_defense
-			shit.power = shit.power * hit_multiplier			-- reduce damage
+			shit.power = shit.power * hit_multiplier		-- reduce damage
 		end
+	else
+		-- grenade shrapnel is blocked by all inserts
+		ratio = 0.05 / armor_defense
+		shit.power = shit.power * hit_multiplier			-- reduce damage
+	end
 
-		-- decrease plate condition
-		local cond_loss = plate_sections[plate_name].cond_loss * math.max(ratio, 0.5) -- minimum condition loss is ratio = 0.5
-		local cond = clamp(plate:condition() - cond_loss, 0, 1)
-		plate:set_condition(cond)
-		printdbg("%s condition decreased to %s", plate_name, cond)
-		
-		-- delete broken plates, and notify actor of fully broken plate
-		if plate and plate:condition() < 0.005 then
-			alife_release_id(plate:id())
-			shot_type = shot_type + 2
-			if arti_slot_control_mcm.get_config("ballisticMessage") then
-				local message = game.translate_string("st_armor_broken")--"Ballistic insert has fully broken"
-				news_manager.send_tip(db.actor, message, nil, "swiss_knife", 6000)
-			end
+	-- decrease plate condition
+	local cond_loss = ini_conf:r_float_ex(plate_name, "cond_loss") * math.max(ratio, 0.5) -- minimum condition loss is ratio = 0.5
+	plate.cond = clamp(plate.cond - cond_loss, 0, 1)
+	-- plate:set_condition(cond)
+	printdbg("%s condition decreased to %s", plate_name, plate.cond)
+	
+	-- delete broken plates, and notify actor of fully broken plate
+	if plate and plate.cond < 0.005 then
+		plates[outfit:id()] = nil
+		shot_type = shot_type + 2
+		if arti_slot_control_mcm.get_config("ballisticMessage") then
+			local message = game.translate_string("st_armor_broken")--"Ballistic insert has fully broken"
+			news_manager.send_tip(db.actor, message, nil, "swiss_knife", 6000)
 		end
-		
-		-- inform actor of hit
-        if arti_slot_control_mcm.get_config("ballisticMessage")  then
-			actor_menu.set_msg(1, msg, 3)
-		end		
-		-- play appropriate sounds
-		local material = SYS_GetParam(0, plate:section(), "material") or "kevlar"
-		play_appropriate_sounds(material, shot_type)
+	end
+	
+	-- inform actor of hit
+	if arti_slot_control_mcm.get_config("ballisticMessage")  then
+		actor_menu.set_msg(1, msg, 3)
+	end		
+	-- play appropriate sounds
+	local material = ini_conf:r_string_ex(plate_name, "material") or "kevlar"
+	play_appropriate_sounds(material, shot_type)
 
+end
+
+function on_item_drag_dropped(from, to, slot_from, slot_to)
+	if not (slot_from == EDDListType.iActorBag and (slot_to == EDDListType.iActorBag or slot_to == EDDListType.iActorSlot)) then
+        return
+    end
+
+	if to and IsOutfit(to) and from and ini_conf:section_exist(from:section()) then
+		remove_plate(to)
+		install_plate(from, to)
 	end
 end
 
+function precond_remove(outfit)
+	local id = outfit and outfit:id() or 0
+	if plates[id] then
+		if IsOutfit(outfit) then return "st_remove_plate"
+		else plates[id] = nil end
+	end
+end
+
+function remove_plate(outfit)
+	local sec = outfit and outfit:section() or ""
+	if not ini_armor:section_exist(sec) then
+		printf("Section %s should not have plate", sec)
+		plates[outfit:id()] = nil
+	end
+	if not plates[outfit:id()] then return end
+	local plate = plates[outfit:id()]
+	alife_create_item(plate.section, db.actor, {cond = plate.cond})
+	plates[outfit:id()] = nil
+	adjust_weight(outfit)
+end
+
+function precond_install(plate)
+	local outfit = db.actor:item_in_slot(7)
+	local o_sec = outfit:section()
+	local size = ini_armor:r_float_ex(o_sec, "size")
+	if not size then return end
+	local p_size = ini_conf:r_float_ex(plate:section(), "size")
+	if p_size >= size then return "st_insert_plate" end
+end
+
+function install_plate(plate, outfit)
+	if not outfit then outfit = db.actor:item_in_slot(7) end
+	if not outfit then return end
+	plates[outfit:id()] = {
+		section = plate:section(),
+		cond = plate:condition()
+	}
+	alife_release(plate)
+	adjust_weight(outfit)
+	-- some animations, perhaps?
+end
+
+function adjust_weight(obj)
+	if not IsOutfit(obj) then return end
+	local original_weight = obj:weight()
+	
+    local base_weight = SYS_GetParam(2, obj:section(), "inv_weight")
+    local upgrades = utils_item.get_upgrades_installed(obj)
+    local add_inv_weight = 0
+    for _, upgrade in pairs(upgrades) do
+        local section = ini_sys:r_string_ex(upgrade, "section")
+        local weight_adj = ini_sys:r_string_ex(section,"inv_weight")
+        if weight_adj then
+            local op = string.sub(weight_adj, 1, 1)
+            local val = tonumber(string.sub(weight_adj, 2))
+
+            add_inv_weight = op == "+" and add_inv_weight + val or add_inv_weight - val
+        end
+    end
+
+    base_weight = base_weight + add_inv_weight
+
+    local plate = plates[obj:id()]
+    if plate then
+        base_weight = base_weight + SYS_GetParam(2, plate.section, "inv_weight")
+    end
+
+	obj:set_weight(base_weight)
+end
+
+
+local clr_r  = utils_xml.get_color("d_red")
+local clr_g  = utils_xml.get_color("d_green")
+local clr_y  = utils_xml.get_color("yellow")
+
+local clr_2  = utils_xml.get_color("ui_gray_1")
+original_build_desc_header = ui_item.build_desc_header
+function ui_item.build_desc_header(obj, sec, str)
+	local _str = ""
+	local _str2 = original_build_desc_header(obj, sec, str)
+	
+	if obj and IsOutfit(obj) then
+        local plate = plates[obj:id()]
+		if plate then
+			local cond = math.floor(plate.cond * 100)
+			-- display default info
+			_str = _str .. "  " .. gc("st_dot") .. "  " .. clr_2 ..  gc("st_plate_in") .. " ".. utils_xml.get_color_con(cond) .. ui_item.get_sec_name(plate.section) .. "(" .. cond .. "%)\\n"
+		else
+			-- display plate info
+			local size = ini_armor:r_float_ex(obj:section(), "size") or 0
+			_str = _str .. gc("st_dot") .. "  " .. gc("st_plate_cap_"..size) .. "\\n"
+		end
+    end
+	_str = _str2 .. _str
+
+	return _str
+end
+
+function slot_move(obj)
+    on_move(nil, obj)
+end
+
+function on_move(_, item)
+	if IsOutfit(item) then adjust_weight(item) end
+end
+
+function save_state(mdata)
+	mdata.plates = plates
+end
+
+function load_state(mdata)
+	plates = mdata.plates or {}
+end
+
+function server_entity_on_unregister(se_obj, typ)
+	plates[se_obj.id] = nil
+end
+
 function on_game_start()
+	custom_functor_autoinject.add_functor("add_plate", precond_remove, precond_remove, nil, remove_plate, true)
+    RegisterScriptCallback("ActorMenu_on_item_drag_drop",on_item_drag_dropped)
+	RegisterScriptCallback("save_state", save_state)
+	RegisterScriptCallback("load_state", load_state)
 	RegisterScriptCallback("actor_on_before_hit",actor_on_before_hit)
+
+    RegisterScriptCallback("ActorMenu_on_item_after_move", on_move)
+	RegisterScriptCallback("actor_item_to_slot",slot_move)
+	RegisterScriptCallback("actor_item_to_ruck",slot_move)
 end
