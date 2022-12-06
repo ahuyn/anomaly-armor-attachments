@@ -1,6 +1,7 @@
 
 get_config = arti_slot_control_mcm.get_config
 print_dbg = arti_slot_control_mcm.print_dbg
+ini_conf = ini_file("items\\settings\\plate_config.ltx")
 
 
 function add_recipes()
@@ -146,6 +147,24 @@ function death_manager.create_release_item(npc)
 
 end 
 
+local drops = {
+    { -- lol poor
+        ["af_kevlar"] = 0.6,
+    },
+    { 
+        ["af_kevlar"] = 0.6,
+    },
+    { 
+        ["af_kevlar"] = 0.6,
+    },
+    { 
+        ["af_kevlar"] = 0.6,
+    },
+    { 
+        ["af_kevlar"] = 0.6,
+    },
+}
+
 local drop_table = {
     
     ["stalker"] = {"af_kevlar"},
@@ -165,7 +184,7 @@ local drop_table = {
 function check_plates(npc)
     local has_plate = false
     local function itr_inv(temp, item)
-        if SYS_GetParam(0, item:section(), "material") then
+        if ini_conf:section_exist(item:section()) then
             item:set_condition(math.random())
             has_plate = true
         end

@@ -41,6 +41,7 @@
 		%c[d_cyan] • %c[ui_gray_2] military item\n
 		%c[d_cyan] • %c[ui_gray_2] provides Class III+ / BR4 protection\n
 		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		%c[d_cyan] • %c[ui_gray_2] reduces movespeed when equipped\n
 		</text>
 	</string>
 	<string id="st_af_ceramic_name">
@@ -52,13 +53,14 @@
 		%c[d_cyan] • %c[ui_gray_2] military item\n
 		%c[d_cyan] • %c[ui_gray_2] provides Class IV / BR5 protection\n
 		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		%c[d_cyan] • %c[ui_gray_2] reduces movespeed when equipped\n
 		</text>
 	</string>
 	<string id="st_af_polymer_name">
 		<text>UHMWPE ballistic insert</text>
 	</string>
 	<string id="st_af_polymer_descr">
-		<text>Polyethylene (PE) is widely used in a variety of industrial and commercial products due to its simple nonreactive chemical structure and versatile properties. Ultra-high molecular weight polyethylene (UHMWPE), which comprises these armor inserts, provides incredible protective strength for its low weight. Incoming projectiles locally melt the polymer through friction, trapping the bullet within the insert. This mechanism gives PE plates unparallelled multi-hit protection capability. However, UHMWPE is very expensive, and cannot fully stop higher-caliber projectiles on its own.\n \n
+		<text>Polyethylene (PE) is widely used in a variety of industrial and commercial products due to its simple nonreactive chemical structure and versatile properties. Ultra-high molecular weight polyethylene (UHMWPE), which comprises these armor inserts, provides incredible protective strength for its low weight. Incoming projectiles locally melt the polymer through friction, trapping the bullet within the insert. This mechanism gives PE plates unparallelled multi-hit protection capability. However, UHMWPE is very expensive, and cannot fully stop higher-caliber projectiles on its own.\n \n%c[d_red]\n\n%c[d_red]WARNING:%c[ui_gray_2]\n \n%c[default]UHWMPE ballistic inserts are highly sensitive to heat and will fail when exposed to high temperature situations. For this reason, exercise extreme caution when navigating anomalies of a thermal nature.\n \n
 		%c[ui_gray_2]PROPERTIES:\n
 		%c[d_cyan] • %c[ui_gray_2] military item\n
 		%c[d_cyan] • %c[ui_gray_2] provides Class III / BR4 protection\n
@@ -86,6 +88,7 @@
 		%c[d_cyan] • %c[ui_gray_2] military item\n
 		%c[d_cyan] • %c[ui_gray_2] provides Class IV / BR5 protection\n
 		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		%c[d_cyan] • %c[ui_gray_2] reduces movespeed when equipped\n
 		</text>
 	</string>
 	<string id="st_af_ceramic_up_name">
@@ -97,13 +100,14 @@
 		%c[d_cyan] • %c[ui_gray_2] military item\n
 		%c[d_cyan] • %c[ui_gray_2] provides Class IV / BR6 protection\n
 		%c[d_cyan] • %c[ui_gray_2] can only equip one armor insert\n
+		%c[d_cyan] • %c[ui_gray_2] reduces movespeed when equipped\n
 		</text>
 	</string>
 	<string id="st_af_polymer_up_name">
 		<text>UHMWPE/Ceramic ballistic insert</text>
 	</string>
 	<string id="st_af_polymer_up_descr">
-		<text>One of the most recent advances in personal armor comes in the form of a composite armor insert composed of a hard ceramic impact layer backed with an ultra-high molecular weight polyethylene (UHMWPE) reinforcing layer to prevent penetration. While neither as protective against high-calibers as thicker full-ceramic plates, nor as capable for multi-hit protection as UHMWPE-only plates, it manages to protect against a majority of threats while still being lighter than most inserts. However, it's high expense has delayed mass adoption by the world's armed forces.\n \n
+		<text>One of the most recent advances in personal armor comes in the form of a composite armor insert composed of a hard ceramic impact layer backed with an ultra-high molecular weight polyethylene (UHMWPE) reinforcing layer to prevent penetration. While neither as protective against high-calibers as thicker full-ceramic plates, nor as capable for multi-hit protection as UHMWPE-only plates, it manages to protect against a majority of threats while still being lighter than most inserts. However, it's high expense has delayed mass adoption by the world's armed forces.\n \n%c[d_red]\n\n%c[d_red]WARNING:%c[ui_gray_2]\n \n%c[default]UHWMPE ballistic inserts are highly sensitive to heat and will fail when exposed to high temperature situations. For this reason, exercise extreme caution when navigating anomalies of a thermal nature. \n \n
 		%c[ui_gray_2]PROPERTIES:\n
 		%c[d_cyan] • %c[ui_gray_2] military item\n
 		%c[d_cyan] • %c[ui_gray_2] provides Class IV / BR5 protection\n
