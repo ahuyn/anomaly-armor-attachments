@@ -18,6 +18,7 @@ local ini_conf = ini_file("items\\settings\\plate_config.ltx")
 local ini_armor = ini_file("items\\settings\\plate_armors.ltx")
 
 gc = game.translate_string
+print_dbg = arti_slot_control.print_dbg
 local plates = {}
 local update_plate_condition = true
 local coeff = 0.012			-- used to calculate damage multiplier. By default, kevlar plates hit multiplier is 0.20
@@ -133,35 +134,10 @@ end
 
 local function actor_on_before_hit(shit,bone_id)
 	-- only proceed for gunshot wounds that would impact the chest or back
-	if (shit.type == hit.fire_wound) then
-		if head_bones[bone_id] then
-			shit.power = shit.power * 1.5		-- all hits to the head do 50% more damage
-			return								-- and then exit function
-		elseif protected_bones[bone_id] then
-			shit.power = shit.power * 1.2		-- all hits to the chest and back do 20% more damage
-		else
-			return				-- hits to other parts don't trigger this function
-		end
-	else
-		return			-- only trigger for bullet wounds
+	if (shit.type ~= hit.fire_wound) or not protected_bones[bone_id] then
+		return
 	end
-	
-	-- local found = false
-	-- local plate
-	-- local hit_multiplier
-	-- local plate_name
-	
-	-- -- check belt for plates
-	-- db.actor:iterate_belt( 
-	-- function (owner, obj)
-	-- 	if obj and not found and plate_sections[obj:section()] then
-	-- 		plate = obj
-	-- 		plate_name = plate:section()
-	-- 		hit_multiplier = plate_sections[plate_name].hit_multiplier
-	-- 		found = true
-	-- 	end
-	-- end
-	-- )
+
 	local outfit = db.actor:item_in_slot(7)
 
 	if not outfit or not plates[outfit:id()] then
@@ -194,7 +170,7 @@ local function actor_on_before_hit(shit,bone_id)
 		-- printf("Bullet AP is %s, armor defense is %s. Defense Ratio is %s", k_ap, armor_defense, ratio)
 		-- armor's ability to stop rounds is diminished as it loses condition
 		if (ratio > 1) then
-			printdbg("Bullet with AP %s penetrated %s", k_ap, plate_name)
+			print_dbg("Bullet with AP %s penetrated %s", k_ap, plate_name)
 			shit.power = shit.power * 0.9					-- penetrating the armor still consumes a small amount of the projectile's energy
 			msg = game.translate_string("st_armor_penetrated")--"Bullet penetrated armor insert!"
 			shot_type = 1
@@ -208,10 +184,10 @@ local function actor_on_before_hit(shit,bone_id)
 	end
 
 	-- decrease plate condition
-	local cond_loss = ini_conf:r_float_ex(plate_name, "cond_loss") * math.max(ratio, 0.5) -- minimum condition loss is ratio = 0.5
+	local cond_loss = ini_conf:r_float_ex(plate_name, "cond_loss") * clamp(ratio, 0, 1.5) -- minimum condition loss is ratio = 0.5
 	plate.cond = clamp(plate.cond - cond_loss, 0, 1)
 	-- plate:set_condition(cond)
-	printdbg("%s condition decreased to %s", plate_name, plate.cond)
+	print_dbg("%s condition decreased to %s", plate_name, plate.cond)
 	
 	-- delete broken plates, and notify actor of fully broken plate
 	if plate and plate.cond < 0.005 then
@@ -314,6 +290,11 @@ function adjust_weight(obj)
 	obj:set_weight(base_weight)
 end
 
+DOutfit =item_parts.disassembly_outfit 
+function item_parts.disassembly_outfit(outfit, tool)
+	remove_plate(outfit)
+	DOutfit(outfit, tool)
+end
 
 local clr_r  = utils_xml.get_color("d_red")
 local clr_g  = utils_xml.get_color("d_green")
@@ -330,7 +311,7 @@ function ui_item.build_desc_header(obj, sec, str)
 		if plate then
 			local cond = math.floor(plate.cond * 100)
 			-- display default info
-			_str = _str .. "  " .. gc("st_dot") .. "  " .. clr_2 ..  gc("st_plate_in") .. " ".. utils_xml.get_color_con(cond) .. ui_item.get_sec_name(plate.section) .. "(" .. cond .. "%)\\n"
+			_str = _str .. "  " .. gc("st_dot") .. "  " .. clr_2 ..  gc("st_plate_in") .. " ".. utils_xml.get_color_con(cond) .. ui_item.get_sec_name(plate.section) .. " (" .. cond .. "%)\\n"
 		else
 			-- display plate info
 			local size = ini_armor:r_float_ex(obj:section(), "size") or 0
