@@ -265,7 +265,7 @@ end
 
 function install_plate(plate, outfit)
 	if not outfit then outfit = db.actor:item_in_slot(7) end
-	if not outfit then return end
+	if not outfit or not plate then return end
 	plates[outfit:id()] = {
 		section = plate:section(),
 		cond = plate:condition()
