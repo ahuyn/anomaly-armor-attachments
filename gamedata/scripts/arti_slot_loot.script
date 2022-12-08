@@ -148,20 +148,30 @@ function death_manager.create_release_item(npc)
 end 
 
 local drops = {
-    { -- lol poor
-        ["af_kevlar"] = 0.6,
+    { -- v poor
+        ["af_kevlar"] = 1
+    },
+    { -- not as poor
+        ["af_kevlar"] = 1,
+        ["af_plates"] = 0.5
+    },
+    { 
+        ["af_kevlar"] = 1,
+        ["af_kevlar_up"] = 0.5,
+        ["af_plates"] = 0.7,
+        ["af_ceramic"] = 0.5
     },
     { 
         ["af_kevlar"] = 0.6,
+        ["af_plates"] = 0.6,
+        ["af_ceramic"] = 0.5,
+        ["af_polymer"] = 0.5
     },
     { 
         ["af_kevlar"] = 0.6,
-    },
-    { 
-        ["af_kevlar"] = 0.6,
-    },
-    { 
-        ["af_kevlar"] = 0.6,
+        ["af_plates"] = 0.6,
+        ["af_ceramic"] = 0.5,
+        ["af_polymer"] = 0.5
     },
 }
 

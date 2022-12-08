@@ -227,7 +227,7 @@ function on_item_drag_dropped(from, to, slot_from, slot_to)
         return
     end
 
-	if to and IsOutfit(to) and from and ini_conf:section_exist(from:section()) then
+	if to and IsOutfit(to) and from and ini_conf:section_exist(from:section()) and precond_install(from, to) then
 		remove_plate(to)
 		install_plate(from, to)
 	end
@@ -254,8 +254,9 @@ function remove_plate(outfit)
 	adjust_weight(outfit)
 end
 
-function precond_install(plate)
-	local outfit = db.actor:item_in_slot(7)
+function precond_install(plate, outfit)
+	local outfit = outfit or db.actor:item_in_slot(7)
+	if not outfit then return end
 	local o_sec = outfit:section()
 	local size = ini_armor:r_float_ex(o_sec, "size")
 	if not size then return end
@@ -350,7 +351,7 @@ function ui_item.build_desc_header(obj, sec, str)
 		else
 			-- display plate info
 			local size = ini_armor:r_float_ex(obj:section(), "size") or 0
-			_str = _str .. gc("st_dot") .. "  " .. gc("st_plate_cap_"..size) .. "\\n"
+			_str = _str .. "  " .. gc("st_dot") .. "  " .. gc("st_plate_cap_"..size) .. "\\n"
 		end
     end
 	_str = _str2 .. _str
