@@ -68,11 +68,15 @@ local protected_bones = {
 	[11] = true,	-- spine
 	[12] = true,	-- spine1
 	[13] = true,	-- spine2
+	[20] = true,	-- clavicle
 	[21] = true,	-- l_upperarm		-- assumes right-handed actor
 	[22] = true,	-- l_forearm
 	[23] = true,	-- l_forearm
+	[33] = true, 
+	[34] = true, 
 	[35] = true,	-- r_forearm
 	[36] = true,	-- r_forearm
+	[46] = true, 
 }
 
 -- When actor is hit in the head by a gunshot, will take extra damage (but not trigger plate)
