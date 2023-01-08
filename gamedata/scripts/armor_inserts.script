@@ -265,7 +265,7 @@ function precond_install(plate, outfit)
 	local size = ini_armor:r_float_ex(o_sec, "size")
 	if not size then return end
 	local p_size = ini_conf:r_float_ex(plate:section(), "size")
-	if p_size >= size then return "st_insert_plate" end
+	if p_size <= size then return "st_insert_plate" end
 end
 
 function install_plate(plate, outfit)
