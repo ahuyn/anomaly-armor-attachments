@@ -65,6 +65,10 @@ function remove_frame(backpack)
     update_weight(backpack)
 end
 
+function on_qrs(backpack, stash)
+    remove_frame(backpack)
+end
+
 local current_backpack = 0
 
 -- Credit to HarukaSai for inv iteration adjustment
@@ -73,7 +77,6 @@ function get_weight(obj)
     local id = obj:id()
     local base_weight = SYS_GetParam(2, obj:section(), "additional_inventory_weight")
     local upgrades = utils_item.get_upgrades_installed(obj)
-    --printf(utils_data.print_table(upgrades, "upgrades_haruka", true))
     local add_inv_weight = 0
     for _, upgrade in pairs(upgrades) do
         local section = ini_sys:r_string_ex(upgrade, "section")
@@ -105,27 +108,6 @@ end
 
 function slot_move(obj)
     on_move(nil, obj)
-end
-
-NameCustom = ui_inventory.UIInventory.Name_Custom
--- hijack functions for backpacks
-function ui_inventory.UIInventory:Name_Custom(obj, bag, temp, i)
-	obj = self:CheckItem(obj,"Name_Custom " .. i)
-	if i == 3 and backpacks[obj:id()] then -- menu field strip
-		return check_remove_frame(obj)
-	else
-		return NameCustom(self, obj, bag, temp, i)
-	end
-end
-
-ActionCustom = ui_inventory.UIInventory.Action_Custom
-function ui_inventory.UIInventory:Action_Custom(obj, bag, temp, i)
-	obj = self:CheckItem(obj,"Action_Custom " .. i)
-	if i == 3 and backpacks[obj:id()] then -- menu field strip
-		remove_frame(obj)
-	else
-		ActionCustom(self, obj, bag, temp, i)
-	end
 end
 
 local clr_r  = utils_xml.get_color("d_red")
@@ -185,8 +167,10 @@ function on_game_start()
 		RegisterScriptCallback("save_state",save_state)
 		RegisterScriptCallback("load_state",load_state)
     end
+    custom_functor_autoinject.add_functor("remove_frame", check_remove_frame, check_remove_frame, nil, remove_frame, true)
 
-    RegisterScriptCallback("ActorMenu_on_item_after_move", on_move)
+    
+    RegisterScriptCallback("actor_on_before_stash_create", on_qrs)
 	RegisterScriptCallback("actor_item_to_slot",slot_move)
 	RegisterScriptCallback("actor_item_to_ruck",slot_move)
 	RegisterScriptCallback("actor_on_item_use",actor_on_item_use)

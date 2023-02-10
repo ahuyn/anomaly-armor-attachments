@@ -66,3 +66,5 @@ end
 function remove_item_from_slot(slot_item)
     db.actor:move_to_ruck(slot_item)
 end
+
+-- hunting pack is a small item

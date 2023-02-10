@@ -33,9 +33,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cp -r anomaly-demonized-scripts/custom_functor_autoinject/gamedata .
           cp -r anomaly-dependencies/trader_autoinject/gamedata .
           cp -r anomaly-dependencies/workshop_autoinject/gamedata . 
+          cp -r anomaly-dependencies/backpack_stash/gamedata . 
           cp -r anomaly-dependencies/inv_upgrades/gamedata . 
+          cp -r anomaly-dependencies/speed/gamedata . 
 
       - name: Zip folder
         run: zip -r $RELEASE_NAME.zip gamedata README 
