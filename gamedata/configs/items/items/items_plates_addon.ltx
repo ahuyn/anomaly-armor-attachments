@@ -7,6 +7,147 @@
 
 ;--=====================================================================
 
+; Plates
+;--=====================================================================
+
+[af_kevlar]:af_base
+$spawn				                               = "artefacts\af_kevlar"
+kind			                                   = i_attach
+class				                               = SCRPTART  	; ����� ������������
+visual                                             = dynamics\equipments\aa\kevlar
+description			                               = st_af_kevlar_descr
+inv_name			                               = st_af_kevlar_name
+inv_name_short			                           = st_af_kevlar_name
+inv_weight			                               = 0.91	; 0.45 * 2x plates
+inv_grid_x			                               = 5
+inv_grid_y			                               = 19
+cost				                               = 3190 ; 6380 ; 6200
+particles_bone			                           = joint2
+af_rank				                               = 0
+lights_enabled                                     = false
+trail_light_color 		                           = 0.9,0.4,0.2
+trail_light_range 		                           = 2.0
+attach_angle_offset		                           = 1.922,1.551,-0.740   
+attach_position_offset                             = 0.15,0.002,0.25
+attach_bone_name		                           = bip01_r_hand
+auto_attach			                               = false
+belt                                               = false
+hit_absorbation_sect		                       = af_kevlar_absorbation
+
+artefact_activation_seq		                       = af_activation_bold
+repair_part_bonus	 	                           = 0.06
+allow_repair                             		       = false
+cond_part										       = true ;-- for ui_item.script
+repair_type				                               = ballistic
+use_condition                                       = true
+script_binding                                     = arti_cond_binder.bind
+
+use1_functor                                       = armor_inserts.precond_install
+use1_action_functor                                = armor_inserts.install_plate
+tier = 3
+
+[af_kevlar_absorbation]:af_base_absorbation
+strike_immunity 		                           = 0.025
+wound_immunity 			                           = 0.025
+explosion_immunity 			                       = 0.025
+fire_wound_immunity  		                       = 0.025
+
+
+;--=====================================================================
+
+[af_kevlar_up]:af_kevlar
+$spawn				                               = "artefacts\af_kevlar"
+description			                               = st_af_new_kevlar_up_descr
+inv_name			                               = st_af_new_kevlar_up_name
+inv_name_short			                           = st_af_new_kevlar_up_name
+inv_weight			                               = 1.52
+cost				                               = 4690 ; 13380 ; 6200
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
+hit_absorbation_sect		                       = af_kevlar_up_absorbation
+repair_part_bonus	 	                           = 0.12
+script_binding                                     = arti_cond_binder.bind
+
+tier = 4
+
+[af_kevlar_up_absorbation]:af_base_absorbation
+strike_immunity 		                           = 0.06
+wound_immunity 			                           = 0.06
+explosion_immunity 			                       = 0.06
+fire_wound_immunity  		                       = 0.06
+
+;--=====================================================================
+
+[af_plates]:af_base
+$spawn				                               = "artefacts\af_plates"
+kind			                               = i_attach
+class				                               = SCRPTART  	; ����� ������������
+visual                                             = dynamics\equipments\aa\plates
+description			                               = st_af_plates_descr
+inv_name			                               = st_af_plates_name
+inv_name_short			                           = st_af_plates_name
+inv_weight			                               = 6.8
+inv_grid_x			                               = 6
+inv_grid_y			                               = 19
+cost				                               = 3930 ; 6200
+particles_bone			                           = joint2
+af_rank				                               = 0
+lights_enabled                                     = false
+trail_light_color 		                           = 0.9,0.4,0.2
+trail_light_range 		                           = 2.0
+attach_angle_offset		                           = 1.922,1.551,-0.740   
+attach_position_offset                             = 0.15,0.002,0.25
+attach_bone_name		                           = bip01_r_hand
+auto_attach			                               = false
+allow_repair                             		       = false
+cond_part										       = true ;-- for ui_item.script
+repair_type				                               = ballistic
+hit_absorbation_sect		                       = af_plates_absorbation
+belt                                               = false
+use_condition                                       = true
+
+artefact_activation_seq		                       = af_activation_bold
+repair_part_bonus	 	                           = 0.07
+script_binding                                     = arti_cond_binder.bind
+
+use1_functor                                       = armor_inserts.precond_install
+use1_action_functor                                = armor_inserts.install_plate
+tier = 3
+
+[af_plates_absorbation]:af_base_absorbation
+strike_immunity 		                           = 0.1
+shock_immunity 			                           = -0.087
+wound_immunity 			                           = 0.1
+explosion_immunity 			                       = 0.1 ; 35 sheets of kevlar eq.
+fire_wound_immunity  		                       = 0.1 ; 35 sheets of kevlar eq.
+
+;--=====================================================================
+
+[af_plates_up]:af_plates
+$spawn				                               = "artefacts\af_plates_up"
+description			                               = st_af_plates_up_descr
+inv_name			                               = st_af_plates_up_name
+inv_name_short			                           = st_af_plates_up_name
+inv_weight			                               = 8.8
+cost				                               = 8430 ; 16860 ; 6200
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
+script_binding                                     = arti_cond_binder.bind
+repair_part_bonus	 	                           = 0.15
+
+tier = 5
+
+[af_plates_up_absorbation]:af_base_absorbation
+strike_immunity 		                           = 0.15
+shock_immunity 			                           = -0.087
+wound_immunity 			                           = 0.15 ; 398 sheets of kevlar eq.
+explosion_immunity 			                       = 0.15 ; 399 sheets of kevlar eq.
+fire_wound_immunity  		                       = 0.15 ; 367 sheets of kevlar eq.
+
 [af_polymer]:af_base
 $spawn				                               = "artefacts\af_kevlar"
 kind			                               = i_attach
@@ -35,11 +176,14 @@ cost				                               = 9200
 hit_absorbation_sect		                       = af_polymer_absorbation
 repair_part_bonus	 	                           = 0.12
 script_binding                                     = arti_cond_binder.bind
-material                                           = kevlar
 allow_repair                             		       = false
 cond_part										       = true ;-- for ui_item.script
 repair_type				                               = ballistic
+use_condition                                       = true
+belt                                               = false
 
+use1_functor                                       = armor_inserts.precond_install
+use1_action_functor                                = armor_inserts.install_plate
 tier = 4
 
 [af_polymer_absorbation]:af_base_absorbation
@@ -69,7 +213,7 @@ visual                                             = dynamics\equipments\aa\plat
 description			                               = st_af_ceramic_descr
 inv_name			                               = st_af_ceramic_name
 inv_name_short			                           = st_af_ceramic_name
-inv_weight			                               = 5.71	;	2 plates * 2.86kg
+inv_weight			                               = 4.71	;	2 plates * 2.86kg
 icons_texture							 		   = ui\ui_icon_armorinserts
 inv_grid_x			                               = 0
 inv_grid_y			                               = 0
@@ -79,12 +223,15 @@ bleeding_restore_speed		                       = 0
 hit_absorbation_sect		                       = af_ceramic_absorbation
 artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.14
-material                                           = ceramic
 allow_repair                             		       = false
 cond_part										       = true ;-- for ui_item.script
 repair_type				                               = ballistic
 script_binding                                     = arti_cond_binder.bind
+use_condition                                       = true
+belt                                               = false
 
+use1_functor                                       = armor_inserts.precond_install
+use1_action_functor                                = armor_inserts.install_plate
 tier = 3
 
 [af_ceramic_absorbation]:af_base_absorbation
@@ -93,6 +240,27 @@ wound_immunity 			                           = 0.16
 explosion_immunity 			                       = 0.16
 fire_wound_immunity  		                       = 0.16
 
+;--=====================================================================
+
+[af_ceramic_up]:af_ceramic
+$spawn				                               = "artefacts\af_plates_up"
+description			                               = st_af_ceramic_up_descr
+inv_name			                               = st_af_ceramic_up_name
+inv_name_short			                           = st_af_ceramic_up_name
+inv_weight			                               = 5.34	;	2 plates * 3.17kg
+cost				                               = 11860
+1icon_layer_x       	                           = 0
+1icon_layer_y      		                           = 0
+1icon_layer_scale   	                           = 1
+1icon_layer        	                               = tch_upgr_ico
+power_restore_speed		                           = -0.00035
+hit_absorbation_sect		                       = af_ceramic_up_absorbation
+artefact_activation_seq		                       = af_activation_bold
+repair_part_bonus	 	                           = 0.15
+script_binding                                     = arti_cond_binder.bind
+repair_type				                               = ballistic
+
+tier = 5    
 ;--=====================================================================
 
 [af_polymer_up]:af_polymer
@@ -110,7 +278,6 @@ hit_absorbation_sect		                       = af_polymer_up_absorbation
 artefact_activation_seq		                       = af_activation_bold
 repair_part_bonus	 	                           = 0.12
 repair_type				                               = ballistic
-material = kevlar
 
 tier = 5
 
@@ -120,28 +287,6 @@ wound_immunity 			                           = 0.14
 explosion_immunity 			                       = 0.14
 fire_wound_immunity  		                       = 0.14
 
-;--=====================================================================
-
-[af_ceramic_up]:af_ceramic
-$spawn				                               = "artefacts\af_plates_up"
-description			                               = st_af_ceramic_up_descr
-inv_name			                               = st_af_ceramic_up_name
-inv_name_short			                           = st_af_ceramic_up_name
-inv_weight			                               = 6.34	;	2 plates * 3.17kg
-cost				                               = 11860
-1icon_layer_x       	                           = 0
-1icon_layer_y      		                           = 0
-1icon_layer_scale   	                           = 1
-1icon_layer        	                               = tch_upgr_ico
-power_restore_speed		                           = -0.00035
-hit_absorbation_sect		                       = af_ceramic_up_absorbation
-artefact_activation_seq		                       = af_activation_bold
-repair_part_bonus	 	                           = 0.15
-script_binding                                     = arti_cond_binder.bind
-repair_type				                               = ballistic
-material = ceramic
-
-tier = 5
 
 [af_ceramic_up_absorbation]:af_base_absorbation
 strike_immunity 		                           = 0.20

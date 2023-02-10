@@ -5,7 +5,7 @@
 		<text>Surge Protector</text>
 	</string>
 	<string id="st_af_new_surge_descr">
-		<text>A small albeit advanced device consisting of a ton of resistors and replaceable fuses. It protects the user by limiting the effective amount of electricity that comes into direct contact with the body through diverting it to the fuses, and subsequently blowing them. This makes it almost foolproof against Electro Anomalies, but it can only endure so many strong electric shocks before all the fuses are blown out. Most stalkers construct these devices with spare electronic trash, which is in no shortage in the Zone. Even though the device is heavy and disposable, it is extremely useful for navigating electrical anomaly fields. As with all metal objects, it can be used as a source of repair material as long as one has appropriate tools and enough skill.\n \n
+		<text>A simple device consisting of a ton of resistors and replaceable fuses. It protects the user by limiting the effective amount of electricity that comes into direct contact with the body through diverting it to the resistor-fuse complex, mitigating a majority of the shock at the cost of blowing the fuses. This makes it almost foolproof against Electro Anomalies, but it can only endure so many strong electric shocks before all the fuses are blown out. Most stalkers construct these devices with spare electronic trash, which is in no shortage in the Zone. Even though the device is heavy and disposable, it is extremely useful for navigating electrical anomaly fields. As with all metal objects, it can be used as a source of repair material as long as one has appropriate tools and enough skill.\n \n
 		%c[ui_gray_2]PROPERTIES:\n
 		%c[d_cyan] • %c[ui_gray_2] technological item\n
 		%c[d_cyan] • %c[ui_gray_2] can only equip one environmental control unit\n
@@ -150,13 +150,22 @@
 	</string>
 
 	<string id="st_af_new_camelbak_up_name">
-		<text>Improved Camelbak</text>
+		<text>Ice Cold Camelbak</text>
 	</string>
 	<string id="st_af_new_camelbak_up_descr">
 		<text>Improvements to the Camelbak keeps the stored water refreshingly cold, cooling the user passively and on drink. Borrowing its name from the myth that camels store water in their humps, camelbak is a pack worn on the back or around the waist of the user, containing a bladder that is filled with water to keep one hydrated. Flexible tube with a mouthpiece facilitates use even in most pressing situations. This model is camouflaged and integrated in the suit to protect the system from damage from any source, be it combat or anomaly. Because the container is made of a high-quality textile, experienced stalkers sometimes re-use scrapped camelbaks for quality materials to patch their field outfits.\n \n%c[d_red]\n\n%c[d_red]WARNING:%c[ui_gray_2]\n \n%c[default]Although water has low electrical conductivity, its proximity to the body may make you more vulnerable to electrical currents. For this reason, it is recommended to take special notice of your surroundings when in possession of a camelbak.\n \n
 		%c[ui_gray_2]PROPERTIES:\n
 		%c[d_cyan] • %c[ui_gray_2] military item\n
 		%c[d_cyan] • %c[ui_gray_2] can only wear one camelbak\n
+		</text>
+	</string>
+	<string id="st_af_huntkit_name">
+		<text>Field dressing kit</text>
+	</string>
+	<string id="st_af_new_camelbak_up_descr">
+		<text>Compact hip pouch with hookes, various knives, tools and sturdy leather gloves used to effectively skin and prepare anomal carcasses. Can be worn on the belt.\n \n
+		%c[ui_gray_2]PROPERTIES:\n
+		%c[d_cyan] • %c[ui_gray_2] military item\n
 		</text>
 	</string>
 </string_table>

@@ -53,25 +53,9 @@ function on_item_drag_dropped(repair_item, surge, slot_from, slot_to)
         alife_release(repair_item)
     end
 end
-
-NameCustom = ui_inventory.UIInventory.Name_Custom
--- hijack functions for backpacks
-function ui_inventory.UIInventory:Name_Custom(obj, bag, temp, i)
-	obj = self:CheckItem(obj,"Name_Custom " .. i)
-	if i == 3 and SYS_GetParam(2, obj:section(), "surge_protection") and obj:condition() < MAX then -- menu field strip
+function precond_surge(surge)
+    if SYS_GetParam(2, surge:section(), "surge_protection") and obj:condition() < MAX then -- menu field strip
 		return "ui_inv_repair"
-	else
-		return NameCustom(self, obj, bag, temp, i)
-	end
-end
-
-ActionCustom = ui_inventory.UIInventory.Action_Custom
-function ui_inventory.UIInventory:Action_Custom(obj, bag, temp, i)
-	obj = self:CheckItem(obj,"Action_Custom " .. i)
-	if i == 3 and SYS_GetParam(2, obj:section(), "surge_protection")  and obj:condition() < MAX then -- menu field strip
-		repair_surge(obj)
-	else
-		ActionCustom(self, obj, bag, temp, i)
 	end
 end
 
@@ -117,6 +101,7 @@ function ui_item.build_desc_footer(obj, sec, str)
 end
 
 function on_game_start()
+	custom_functor_autoinject.add_functor("add_surge", precond_surge, precond_surge, nil, repair_surge, true)
     RegisterScriptCallback("ActorMenu_on_item_drag_drop",on_item_drag_dropped)
     RegisterScriptCallback("actor_on_before_hit",actor_on_before_hit)
 end
