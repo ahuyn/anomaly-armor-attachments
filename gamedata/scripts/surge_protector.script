@@ -54,7 +54,7 @@ function on_item_drag_dropped(repair_item, surge, slot_from, slot_to)
     end
 end
 function precond_surge(surge)
-    if SYS_GetParam(2, surge:section(), "surge_protection") and obj:condition() < MAX then -- menu field strip
+    if SYS_GetParam(2, surge:section(), "surge_protection") and surge:condition() < MAX then -- menu field strip
 		return "ui_inv_repair"
 	end
 end
