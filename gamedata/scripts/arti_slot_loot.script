@@ -13,12 +13,6 @@ function add_recipes()
     workshop_autoinject.add_override_recipe("x_af_surge_up", "3, recipe_expert_3, af_surge, 1 ,af_electra_sparkler,1", 3)
 end
 
-TraderAuto = trader_autoinject.update
-function trader_autoinject.update(npc)
-    TraderAuto(npc)
-    add_plates(npc) -- you define this function ok
-end
-
 
 
 local poor_plates = {
@@ -232,7 +226,7 @@ end
 
 function on_game_start()
 
-    
+    RegisterScriptCallback("trader_on_restock", add_plates)
     workshop_autoinject.add_override_recipe("af_cooler", "3, recipe_advanced_2, e_syringe,2,detector_geiger,1,af_camelbak,1,prt_i_plastic,3", 2)
     workshop_autoinject.add_override_recipe("af_freon", "3, recipe_advanced_1, detector_advanced,1,af_iam,1,prt_i_scrap,5,prt_i_fasteners,4", 2)
 
