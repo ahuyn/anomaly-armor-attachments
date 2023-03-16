@@ -212,7 +212,8 @@ local function actor_on_before_hit(shit,bone_id)
 		shot_type = shot_type + 2
 		if arti_slot_control_mcm.get_config("ballisticMessage") then
 			local message = game.translate_string("st_armor_broken")--"Ballistic insert has fully broken"
-			news_manager.send_tip(db.actor, message, nil, "swiss_knife", 6000)
+			news_manager.send_tip(db.actor, message, nil, "swiss_knife", 6000)	
+			adjust_weight(outfit)
 		end
 	end
 	
