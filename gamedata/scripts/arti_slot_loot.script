@@ -219,8 +219,7 @@ end
 
 CanRepair = inventory_upgrades.can_repair_item
 function inventory_upgrades.can_repair_item(sec, cond, mechanic)
-    printf("Checking %s for repair", sec)
-    if get_config("ballisticRepair") and SYS_GetParam(0, sec, "material") then return true end
+    if get_config("ballisticRepair") and ini_conf:section_exist(sec) then return true end
     return CanRepair(sec, cond, mechanic)
 end
 
